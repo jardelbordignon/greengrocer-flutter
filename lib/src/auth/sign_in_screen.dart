@@ -30,7 +30,7 @@ class SignInScreen extends StatelessWidget {
                 const AppTextField(
                   icon: Icons.lock,
                   label: 'Password',
-                  isObscure: true,
+                  isSecret: true,
                 ),
                 // Button
                 ElevatedButton(onPressed: () {}, child: const Text('Sign In')),
