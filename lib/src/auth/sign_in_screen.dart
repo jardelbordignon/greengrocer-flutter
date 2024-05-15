@@ -1,4 +1,7 @@
+import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:greengrocer/src/auth/components/app_text_field.dart';
@@ -12,7 +15,58 @@ class SignInScreen extends StatelessWidget {
       backgroundColor: Colors.green,
       body: Column(
         children: [
-          Expanded(child: Container(color: Colors.green)),
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                // App name
+                const Text.rich(
+                  TextSpan(
+                    style: TextStyle(
+                      fontSize: 40,
+                    ),
+                    children: [
+                      TextSpan(
+                        text: 'Green',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      TextSpan(
+                        text: 'grocer',
+                        style: TextStyle(
+                          color: Colors.red,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+                // Categories
+                SizedBox(
+                  height: 30,
+                  child: DefaultTextStyle(
+                    style: const TextStyle(fontSize: 25),
+                    child: AnimatedTextKit(
+                      repeatForever: true,
+                      pause: Duration.zero,
+                      animatedTexts: [
+                        FadeAnimatedText('Frutas'),
+                        FadeAnimatedText('Verduras'),
+                        FadeAnimatedText('Legumes'),
+                        FadeAnimatedText('Carnes'),
+                        FadeAnimatedText('Cereais'),
+                        FadeAnimatedText('Laticínios'),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+
+          // Formulary
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 40),
             decoration: const BoxDecoration(
