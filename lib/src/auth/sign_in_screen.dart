@@ -5,6 +5,7 @@ import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:greengrocer/src/auth/components/app_text_field.dart';
+import 'package:greengrocer/src/auth/sign_up_screen.dart';
 import 'package:greengrocer/src/config/custom_colors.dart';
 
 class SignInScreen extends StatelessWidget {
@@ -171,7 +172,15 @@ class SignInScreen extends StatelessWidget {
                             color: Colors.green,
                           ),
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return const SignUpScreen();
+                              },
+                            ),
+                          );
+                        },
                         child: const Text(
                           'Sign Up',
                           style: TextStyle(
