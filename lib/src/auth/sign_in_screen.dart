@@ -127,7 +127,7 @@ class SignInScreen extends StatelessWidget {
                       child: TextButton(
                         onPressed: () {},
                         child: Text(
-                          'Esqueceu a senha?',
+                          'Forgot Password?',
                           style: TextStyle(
                             color: CustomColors.customContrastColor,
                           ),
@@ -147,7 +147,7 @@ class SignInScreen extends StatelessWidget {
                         const Padding(
                           padding:
                               EdgeInsets.only(left: 10, right: 10, bottom: 12),
-                          child: Text('Ou'),
+                          child: Text('or'),
                         ),
                         Expanded(
                           child: Divider(
