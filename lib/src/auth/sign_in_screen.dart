@@ -5,6 +5,7 @@ import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:greengrocer/src/auth/components/app_text_field.dart';
+import 'package:greengrocer/src/config/custom_colors.dart';
 
 class SignInScreen extends StatelessWidget {
   const SignInScreen({super.key});
@@ -12,7 +13,7 @@ class SignInScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.green,
+      backgroundColor: CustomColors.customSwatchColor,
       body: Column(
         children: [
           Expanded(
@@ -20,13 +21,13 @@ class SignInScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 // App name
-                const Text.rich(
+                Text.rich(
                   TextSpan(
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 40,
                     ),
                     children: [
-                      TextSpan(
+                      const TextSpan(
                         text: 'Green',
                         style: TextStyle(
                           color: Colors.white,
@@ -36,7 +37,8 @@ class SignInScreen extends StatelessWidget {
                       TextSpan(
                         text: 'grocer',
                         style: TextStyle(
-                          color: Colors.red,
+                          color: CustomColors.customContrastColor,
+                          fontWeight: FontWeight.w500,
                         ),
                       ),
                     ],
@@ -70,10 +72,11 @@ class SignInScreen extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 40),
             decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.vertical(
-                  top: Radius.circular(25),
-                )),
+              color: Colors.white,
+              borderRadius: BorderRadius.vertical(
+                top: Radius.circular(25),
+              ),
+            ),
             child: Column(
               // mainAxisAlignment: MainAxisAlignment.spaceBetween, // space between
               crossAxisAlignment:
@@ -95,25 +98,32 @@ class SignInScreen extends StatelessWidget {
                   height: 50,
                   //width: 200,
                   child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
                       ),
-                      onPressed: () {},
-                      child: const Text(
-                        'Sign In',
-                        style: TextStyle(fontSize: 18),
-                      )),
+                      backgroundColor: Colors.green,
+                    ),
+                    onPressed: () {},
+                    child: const Text(
+                      'Sign In',
+                      style: TextStyle(
+                        fontSize: 18,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
                 ),
 
                 Align(
                   alignment: Alignment.centerRight,
                   child: TextButton(
                     onPressed: () {},
-                    child: const Text(
+                    child: Text(
                       'Esqueceu a senha?',
-                      style: TextStyle(color: Colors.redAccent),
+                      style: TextStyle(
+                        color: CustomColors.customContrastColor,
+                      ),
                     ),
                   ),
                 ),
