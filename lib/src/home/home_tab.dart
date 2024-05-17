@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:flutter/widgets.dart';
 import 'package:greengrocer/src/config/custom_colors.dart';
 
 class HomeTab extends StatelessWidget {
@@ -33,11 +34,24 @@ class HomeTab extends StatelessWidget {
         )),
         actions: [
           // Cart button
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.shopping_cart,
-              color: Colors.white,
+          Padding(
+            padding: const EdgeInsets.only(top: 15, right: 15),
+            child: GestureDetector(
+              onTap: () {},
+              child: Badge(
+                backgroundColor: CustomColors.customContrastColor,
+                label: const Text(
+                  '2',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 12,
+                  ),
+                ),
+                child: const Icon(
+                  Icons.shopping_cart,
+                  color: Colors.white,
+                ),
+              ),
             ),
           ),
         ],
