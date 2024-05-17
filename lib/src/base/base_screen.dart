@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../home/home_tab.dart';
+
 class BaseScreen extends StatefulWidget {
   // Needs to be a StatefulWidget to change some state
   const BaseScreen({super.key});
@@ -20,7 +22,7 @@ class _BaseScreenState extends State<BaseScreen> {
         physics: const NeverScrollableScrollPhysics(), // To disable swiping
         controller: pageController,
         children: [
-          Container(color: Colors.red),
+          const HomeTab(),
           Container(color: Colors.blue),
           Container(color: Colors.yellow),
           Container(color: Colors.purple),
