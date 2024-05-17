@@ -16,75 +16,102 @@ class SignUpScreen extends StatelessWidget {
         child: SizedBox(
           height: size.height,
           width: size.width,
-          child: Column(
+          child: Stack(
+            // Stack is used to add widgets in the background
             children: [
-              const Expanded(
-                child: Center(
-                  child: Text(
-                    'Sign Up',
-                    style: TextStyle(
+              // Back button
+              Positioned(
+                top: 10,
+                left: 10,
+                child: SafeArea(
+                  child: IconButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    icon: const Icon(
+                      Icons.arrow_back_ios,
                       color: Colors.white,
-                      fontSize: 25,
                     ),
                   ),
                 ),
               ),
 
-              // Formulary
-              Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 32,
-                  vertical: 40,
-                ),
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.vertical(
-                    top: Radius.circular(25),
-                  ),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    const AppTextField(
-                      icon: Icons.email,
-                      label: 'Email',
-                    ),
-                    const AppTextField(
-                      icon: Icons.lock,
-                      label: 'Password',
-                      isSecret: true,
-                    ),
-                    const AppTextField(
-                      icon: Icons.person,
-                      label: 'Name',
-                    ),
-                    const AppTextField(
-                      icon: Icons.phone,
-                      label: 'Phone',
-                    ),
-                    const AppTextField(
-                      icon: Icons.file_copy,
-                      label: 'Document Number',
-                    ),
-                    SizedBox(
-                      height: 50,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          backgroundColor: Colors.green,
-                        ),
-                        onPressed: () {},
-                        child: const Text(
-                          'Sign Up Now',
-                          style: TextStyle(fontSize: 18, color: Colors.white),
+              // Content
+              Column(
+                children: [
+                  // Title
+                  const Expanded(
+                    child: Center(
+                      child: Text(
+                        'Sign Up',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 25,
                         ),
                       ),
-                    )
-                  ],
-                ),
-              )
+                    ),
+                  ),
+
+                  // Formulary
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 32,
+                      vertical: 40,
+                    ),
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.vertical(
+                        top: Radius.circular(25),
+                      ),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        const AppTextField(
+                          icon: Icons.email,
+                          label: 'Email',
+                        ),
+                        const AppTextField(
+                          icon: Icons.lock,
+                          label: 'Password',
+                          isSecret: true,
+                        ),
+                        const AppTextField(
+                          icon: Icons.person,
+                          label: 'Name',
+                        ),
+                        const AppTextField(
+                          icon: Icons.phone,
+                          label: 'Phone',
+                        ),
+                        const AppTextField(
+                          icon: Icons.file_copy,
+                          label: 'Document Number',
+                        ),
+                        SizedBox(
+                          height: 50,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              backgroundColor: Colors.green,
+                            ),
+                            onPressed: () {},
+                            child: const Text(
+                              'Sign Up Now',
+                              style: TextStyle(
+                                fontSize: 18,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  )
+                ],
+              ),
             ],
           ),
         ),
