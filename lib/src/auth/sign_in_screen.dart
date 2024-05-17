@@ -6,6 +6,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:greengrocer/src/auth/components/app_text_field.dart';
 import 'package:greengrocer/src/auth/sign_up_screen.dart';
+import 'package:greengrocer/src/base/base_screen.dart';
 import 'package:greengrocer/src/config/custom_colors.dart';
 
 class SignInScreen extends StatelessWidget {
@@ -102,6 +103,7 @@ class SignInScreen extends StatelessWidget {
                       isSecret: true,
                     ),
 
+                    // Sign In button
                     SizedBox(
                       height: 50,
                       //width: 200,
@@ -112,7 +114,13 @@ class SignInScreen extends StatelessWidget {
                           ),
                           backgroundColor: Colors.green,
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          // when sign in replace navigation stack with BaseScreen
+                          Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(builder: (context) {
+                            return const BaseScreen();
+                          }));
+                        },
                         child: const Text(
                           'Sign In',
                           style: TextStyle(
