@@ -1,19 +1,34 @@
 import 'package:flutter/material.dart';
 
-class BaseScreen extends StatelessWidget {
+class BaseScreen extends StatefulWidget { // Needs to be a StatefulWidget to change some state
   const BaseScreen({super.key});
+
+  @override
+  State<BaseScreen> createState() => _BaseScreenState();
+}
+
+class _BaseScreenState extends State<BaseScreen> {
+  int currentIndex = 0;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        color: Colors.red,
+      // PageView is used to add pages in the background, similar to a carousel
+      body: PageView(
+        children: [
+          Container(color: Colors.red),
+          Container(color: Colors.blue),
+          Container(color: Colors.yellow),
+          Container(color: Colors.purple),
+        ],
       ),
       bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed, // when more than 3 items
-        backgroundColor: Colors.green,
-        selectedItemColor: Colors.white,
-        unselectedItemColor: Colors.white.withAlpha(100),
+        currentIndex: currentIndex,
+        onTap: (index) {
+          setState(() {
+            currentIndex = index;
+          });
+        },
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home_outlined),
@@ -32,6 +47,10 @@ class BaseScreen extends StatelessWidget {
             label: 'Profile',
           ),
         ],
+        type: BottomNavigationBarType.fixed, // when more than 3 items
+        backgroundColor: Colors.green,
+        selectedItemColor: Colors.white,
+        unselectedItemColor: Colors.white.withAlpha(100),
       ),
     );
   }
