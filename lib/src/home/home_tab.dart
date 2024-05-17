@@ -58,6 +58,37 @@ class HomeTab extends StatelessWidget {
       ),
 
       // Search bar
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            child: TextFormField(
+              decoration: InputDecoration(
+                filled: true,
+                fillColor: Colors.white,
+                isDense: true,
+                hintText: 'Search products...',
+                hintStyle: TextStyle(
+                  color: Colors.grey.shade400,
+                  fontSize: 14,
+                ),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(60),
+                  borderSide: const BorderSide(
+                    width: 0,
+                    style: BorderStyle.none,
+                  ),
+                ),
+                prefixIcon: Icon(
+                  Icons.search,
+                  color: CustomColors.customContrastColor,
+                  size: 24,
+                ),
+              ),
+            ),
+          )
+        ],
+      ),
 
       // Categories selector
 
