@@ -39,6 +39,8 @@ dependencies:
   # https://pub.dev/packages/animated_text_kit
   # run `flutter pub get` to load dependencies
   animated_text_kit: ^4.2.2
+  # https://pub.dev/packages/mask_text_input_formatter
+  mask_text_input_formatter: ^2.9.0
 
 dev_dependencies:
   flutter_test:
