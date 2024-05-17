@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-class BaseScreen extends StatefulWidget { // Needs to be a StatefulWidget to change some state
+class BaseScreen extends StatefulWidget {
+  // Needs to be a StatefulWidget to change some state
   const BaseScreen({super.key});
 
   @override
@@ -9,12 +10,15 @@ class BaseScreen extends StatefulWidget { // Needs to be a StatefulWidget to cha
 
 class _BaseScreenState extends State<BaseScreen> {
   int currentIndex = 0;
+  final pageController = PageController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       // PageView is used to add pages in the background, similar to a carousel
       body: PageView(
+        physics: const NeverScrollableScrollPhysics(), // To disable swiping
+        controller: pageController,
         children: [
           Container(color: Colors.red),
           Container(color: Colors.blue),
@@ -27,6 +31,7 @@ class _BaseScreenState extends State<BaseScreen> {
         onTap: (index) {
           setState(() {
             currentIndex = index;
+            pageController.jumpToPage(index);
           });
         },
         items: const [

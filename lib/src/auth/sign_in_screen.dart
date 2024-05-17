@@ -118,7 +118,7 @@ class SignInScreen extends StatelessWidget {
                           // when sign in replace navigation stack with BaseScreen
                           Navigator.of(context).pushReplacement(
                               MaterialPageRoute(builder: (context) {
-                            return BaseScreen();
+                            return const BaseScreen();
                           }));
                         },
                         child: const Text(
