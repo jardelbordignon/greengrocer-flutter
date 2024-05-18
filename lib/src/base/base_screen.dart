@@ -22,7 +22,7 @@ class _BaseScreenState extends State<BaseScreen> {
         physics: const NeverScrollableScrollPhysics(), // To disable swiping
         controller: pageController,
         children: [
-          const HomeTab(),
+          HomeTab(),
           Container(color: Colors.blue),
           Container(color: Colors.yellow),
           Container(color: Colors.purple),
