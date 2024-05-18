@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
-import 'package:greengrocer/src/auth/components/app_text_field.dart';
-import 'package:greengrocer/src/auth/sign_up_screen.dart';
-import 'package:greengrocer/src/base/base_screen.dart';
+import 'package:greengrocer/src/screens/auth/components/app_text_field.dart';
+import 'package:greengrocer/src/screens/auth/sign_up_screen.dart';
+import 'package:greengrocer/src/screens/base/base_screen.dart';
 import 'package:greengrocer/src/config/custom_colors.dart';
 
 class SignInScreen extends StatelessWidget {
