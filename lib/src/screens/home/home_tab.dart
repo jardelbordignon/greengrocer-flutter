@@ -1,9 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
-import 'package:flutter/widgets.dart';
 import 'package:greengrocer/src/config/custom_colors.dart';
-import 'package:greengrocer/src/config/mocked_data.dart';
+import 'package:greengrocer/src/config/mocked_data.dart' as mocked_data;
 import 'package:greengrocer/src/screens/home/components/category_tile.dart';
 
 class HomeTab extends StatefulWidget {
@@ -14,7 +12,7 @@ class HomeTab extends StatefulWidget {
 }
 
 class _HomeTabState extends State<HomeTab> {
-  String selectedCategory = categories[0];
+  String selectedCategory = mocked_data.categories[0];
 
   @override
   Widget build(BuildContext context) {
@@ -106,16 +104,16 @@ class _HomeTabState extends State<HomeTab> {
               itemBuilder: (BuildContext ctx, int index) => CategoryTile(
                 onTap: () {
                   setState(() {
-                    selectedCategory = categories[index];
+                    selectedCategory = mocked_data.categories[index];
                   });
                 },
-                category: categories[index], // Named parameter
-                isSelected:
-                    categories[index] == selectedCategory, // Named parameter
+                category: mocked_data.categories[index], // Named parameter
+                isSelected: mocked_data.categories[index] ==
+                    selectedCategory, // Named parameter
               ),
               separatorBuilder: (BuildContext ctx, int index) =>
                   const SizedBox(width: 10),
-              itemCount: categories.length,
+              itemCount: mocked_data.categories.length,
             ),
           ),
 

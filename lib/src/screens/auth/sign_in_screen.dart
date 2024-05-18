@@ -1,10 +1,6 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
-import 'package:greengrocer/src/config/mocked_data.dart';
+import 'package:greengrocer/src/config/mocked_data.dart' as mocked_data;
 import 'package:greengrocer/src/screens/auth/components/app_text_field.dart';
 import 'package:greengrocer/src/screens/auth/sign_up_screen.dart';
 import 'package:greengrocer/src/screens/base/base_screen.dart';
@@ -70,7 +66,7 @@ class SignInScreen extends StatelessWidget {
                           //   FadeAnimatedText('Cereais'),
                           //   FadeAnimatedText('Laticínios'),
                           // ],
-                          animatedTexts: categories
+                          animatedTexts: mocked_data.categories
                               .map((category) => FadeAnimatedText(category))
                               .toList(),
                         ),
