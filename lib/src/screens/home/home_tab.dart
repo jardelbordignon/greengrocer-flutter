@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:greengrocer/src/config/custom_colors.dart';
 import 'package:greengrocer/src/config/mocked_data.dart' as mocked_data;
 import 'package:greengrocer/src/screens/home/components/category_tile.dart';
@@ -118,6 +119,24 @@ class _HomeTabState extends State<HomeTab> {
           ),
 
           // Store grid
+          Expanded(
+            child: GridView.builder(
+              padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+              physics: const BouncingScrollPhysics(),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                mainAxisSpacing: 10,
+                crossAxisSpacing: 10,
+                childAspectRatio: 9 / 11.5,
+              ),
+              itemCount: mocked_data.items.length,
+              itemBuilder: (BuildContext ctx, int index) {
+                return Container(
+                  color: Colors.red,
+                );
+              },
+            ),
+          ),
         ],
       ),
     );
