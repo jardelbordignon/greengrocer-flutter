@@ -1,9 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:greengrocer/src/config/custom_colors.dart';
 import 'package:greengrocer/src/config/mocked_data.dart' as mocked_data;
 import 'package:greengrocer/src/screens/home/components/category_tile.dart';
+import 'package:greengrocer/src/screens/home/components/item_tile.dart';
 
 class HomeTab extends StatefulWidget {
   const HomeTab({super.key});
@@ -131,8 +130,8 @@ class _HomeTabState extends State<HomeTab> {
               ),
               itemCount: mocked_data.items.length,
               itemBuilder: (BuildContext ctx, int index) {
-                return Container(
-                  color: Colors.red,
+                return ItemTile(
+                  item: mocked_data.items[index],
                 );
               },
             ),
