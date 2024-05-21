@@ -13,89 +13,132 @@ class ProductScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white.withAlpha(230),
-      body: Column(
+      body: Stack(
         children: [
-          // Image
-          Expanded(
-            child: Image.asset(item.imageUrl),
-          ),
-
           // Content
-          Expanded(
-            child: Container(
-              padding: const EdgeInsets.all(32),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: const BorderRadius.vertical(
-                  top: Radius.circular(40),
+          Column(
+            children: [
+              // Image
+              Expanded(
+                child: Hero(
+                  tag: item.imageUrl,
+                  child: Image.asset(item.imageUrl),
                 ),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.shade600,
-                    offset: const Offset(0, 2),
-                    blurRadius: 3,
-                  ),
-                ],
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  // name - quantity
-                  Row(
-                    children: [
-                      // name
-                      Expanded(
-                        child: Text(
-                          item.name,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
 
-                      // quantity
-                      Container(
-                        height: 30,
-                        width: 70,
-                        color: Colors.red,
+              // Content
+              Expanded(
+                child: Container(
+                  padding: const EdgeInsets.all(32),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: const BorderRadius.vertical(
+                      top: Radius.circular(40),
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.shade600,
+                        offset: const Offset(0, 2),
+                        blurRadius: 3,
                       ),
                     ],
                   ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      // name - quantity
+                      Row(
+                        children: [
+                          // name
+                          Expanded(
+                            child: Text(
+                              item.name,
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
 
-                  // price
-                  Text(
-                    utilsServices.priceToCurrency(item.price),
-                    style: const TextStyle(
-                      fontSize: 23,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.green,
-                    ),
-                  ),
+                          // quantity
+                          Container(
+                            height: 30,
+                            width: 70,
+                            color: Colors.red,
+                          ),
+                        ],
+                      ),
 
-                  // description
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 10),
-                      child: SingleChildScrollView(
-                        child: Text(
-                          item.description,
-                          style: const TextStyle(
-                            height: 1.5,
+                      // price
+                      Text(
+                        utilsServices.priceToCurrency(item.price),
+                        style: const TextStyle(
+                          fontSize: 23,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.green,
+                        ),
+                      ),
+
+                      // description
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 10),
+                          child: SingleChildScrollView(
+                            child: Text(
+                              item.description,
+                              style: const TextStyle(
+                                height: 1.5,
+                              ),
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ),
 
-                  // Add to cart button
-                  ElevatedButton(onPressed: () {}, child: const Text('Submit'))
-                ],
+                      // Add to cart button
+                      ElevatedButton.icon(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.green,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                        onPressed: () {},
+                        label: const Text(
+                          'Add to cart',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
+                        icon: const Icon(
+                          Icons.add_shopping_cart_outlined,
+                          color: Colors.white,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              )
+            ],
+          ),
+
+          // Back button
+          Positioned(
+            left: 10,
+            top: 10,
+            child: SafeArea(
+              child: IconButton(
+                onPressed: () => Navigator.of(context).pop(),
+                icon: const Icon(
+                  Icons.arrow_back_ios,
+                  color: Colors.green,
+                ),
               ),
             ),
-          )
+          ),
         ],
       ),
     );
