@@ -1,14 +1,22 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:greengrocer/src/models/item_model.dart';
 import 'package:greengrocer/src/screens/shared_widgets/quantity_widget.dart';
 import 'package:greengrocer/src/services/utils_services.dart';
 
-class ProductScreen extends StatelessWidget {
+class ProductScreen extends StatefulWidget {
   final ItemModel item;
 
-  const ProductScreen({super.key, required this.item});
+  const ProductScreen({
+    super.key,
+    required this.item,
+  });
+
+  @override
+  State<ProductScreen> createState() => _ProductScreenState();
+}
+
+class _ProductScreenState extends State<ProductScreen> {
+  int cartItemQuantity = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -22,8 +30,8 @@ class ProductScreen extends StatelessWidget {
               // Image
               Expanded(
                 child: Hero(
-                  tag: item.imageUrl,
-                  child: Image.asset(item.imageUrl),
+                  tag: widget.item.imageUrl,
+                  child: Image.asset(widget.item.imageUrl),
                 ),
               ),
 
@@ -53,7 +61,7 @@ class ProductScreen extends StatelessWidget {
                           // name
                           Expanded(
                             child: Text(
-                              item.name,
+                              widget.item.name,
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                               style: const TextStyle(
@@ -64,18 +72,43 @@ class ProductScreen extends StatelessWidget {
                           ),
 
                           // quantity
-                          const QuantityWidget(),
+                          QuantityWidget(
+                            suffixText: widget.item.unit,
+                            value: cartItemQuantity,
+                            result: (quantity) {
+                              setState(() {
+                                cartItemQuantity = quantity;
+                              });
+                            },
+                          ),
                         ],
                       ),
 
                       // price
-                      Text(
-                        utilsServices.priceToCurrency(item.price),
-                        style: const TextStyle(
-                          fontSize: 23,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.green,
-                        ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            utilsServices.priceToCurrency(widget.item.price),
+                            style: const TextStyle(
+                              fontSize: 23,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.green,
+                            ),
+                          ),
+
+                          // total
+                          if (cartItemQuantity > 1)
+                            Text(
+                              utilsServices.priceToCurrency(
+                                widget.item.price * cartItemQuantity,
+                              ),
+                              style: const TextStyle(
+                                fontSize: 16,
+                                color: Colors.grey,
+                              ),
+                            ),
+                        ],
                       ),
 
                       // description
@@ -84,7 +117,7 @@ class ProductScreen extends StatelessWidget {
                           padding: const EdgeInsets.symmetric(vertical: 10),
                           child: SingleChildScrollView(
                             child: Text(
-                              item.description,
+                              widget.item.description,
                               style: const TextStyle(
                                 height: 1.5,
                               ),
