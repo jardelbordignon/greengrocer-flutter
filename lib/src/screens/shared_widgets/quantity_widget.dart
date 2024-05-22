@@ -28,6 +28,7 @@ class QuantityWidget extends StatelessWidget {
         ],
       ),
       child: Row(
+        mainAxisSize: MainAxisSize.min, // minimize the space
         children: [
           // remove button
           _QuantityButton(
