@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:greengrocer/src/config/custom_colors.dart';
+import 'package:greengrocer/src/config/mocked_data.dart' as mocked_data;
 import 'package:greengrocer/src/services/utils_services.dart';
 
 class CartTab extends StatelessWidget {
@@ -18,9 +18,19 @@ class CartTab extends StatelessWidget {
       ),
       body: Column(
         children: [
+          // List of items
           Expanded(
-            child: Container(),
+            child: ListView.builder(
+              itemCount: mocked_data.cartItems.length,
+              itemBuilder: (_, index) {
+                return Text(
+                  mocked_data.cartItems[index].item.name,
+                );
+              },
+            ),
           ),
+
+          // Total and check out button
           Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
