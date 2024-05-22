@@ -4,13 +4,17 @@ class QuantityWidget extends StatelessWidget {
   final int value;
   final String suffixText;
   final Function(int quantity) result;
+  final bool isRemovable;
 
   const QuantityWidget({
     super.key,
     required this.value,
     required this.suffixText,
     required this.result,
+    this.isRemovable = false,
   });
+
+  bool get isRemovableNow => isRemovable && value == 1;
 
   @override
   Widget build(BuildContext context) {
@@ -32,10 +36,10 @@ class QuantityWidget extends StatelessWidget {
         children: [
           // remove button
           _QuantityButton(
-            color: Colors.grey,
-            icon: Icons.remove,
+            color: isRemovableNow ? Colors.red : Colors.grey,
+            icon: isRemovableNow ? Icons.delete_forever : Icons.remove,
             onTap: () {
-              if (value > 1) {
+              if (value > 1 || isRemovable) {
                 result(value - 1);
               }
             },
