@@ -12,10 +12,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'GREEN GROCER',
+      title: 'GREENGROCER',
       theme: ThemeData(
         primarySwatch: Colors.green,
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
+        //colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
         scaffoldBackgroundColor: Colors.white.withAlpha(190),
         useMaterial3: true,
       ),
