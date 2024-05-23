@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:greengrocer/src/config/mocked_data.dart' as mocked_data;
+import 'package:greengrocer/src/screens/orders/components/order_tile.dart';
 
 class OrdersTab extends StatelessWidget {
   const OrdersTab({super.key});
@@ -15,9 +16,7 @@ class OrdersTab extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         physics: const BouncingScrollPhysics(),
         separatorBuilder: (_, index) => const SizedBox(height: 10),
-        itemBuilder: (_, index) {
-          return Text(mocked_data.orders[index].id);
-        },
+        itemBuilder: (_, index) => OrderTile(order: mocked_data.orders[index]),
         itemCount: mocked_data.orders.length,
       ),
     );
