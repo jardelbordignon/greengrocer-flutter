@@ -3,6 +3,8 @@ import 'package:greengrocer/src/models/cart_item_model.dart';
 import 'package:greengrocer/src/models/order_model.dart';
 import 'package:greengrocer/src/services/utils_services.dart';
 
+import './order_status_widget.dart';
+
 class OrderTile extends StatelessWidget {
   final OrderModel order;
 
@@ -42,24 +44,40 @@ class OrderTile extends StatelessWidget {
           children: [
             SizedBox(
               height: 150,
-              child: Row(children: [
-                Expanded(
-                  flex: 3,
-                  child: ListView(
-                    children: order.items
-                        .map((orderItem) =>
-                            _OrderItemWidget(orderItem: orderItem))
-                        .toList(),
+              child: Row(
+                children: [
+                  // Order items
+                  Expanded(
+                    flex: 3,
+                    child: ListView(
+                      children: order.items.map((orderItem) {
+                        return _OrderItemWidget(orderItem: orderItem);
+                      }).toList(),
+                    ),
                   ),
-                ),
-                Expanded(
-                  flex: 2,
-                  child: Container(
-                    color: Colors.blue,
+
+                  // Divider
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8),
+                    child: VerticalDivider(
+                      color: Colors.grey.shade300,
+                      thickness: 2,
+                      width: 8,
+                    ),
                   ),
-                ),
-              ]),
-            )
+
+                  // Order status
+                  Expanded(
+                    flex: 2,
+                    child: OrderStatusWidget(
+                      status: order.status,
+                      isPaymentOverdue:
+                          order.paymentOverdueAt.isBefore(DateTime.now()),
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),
