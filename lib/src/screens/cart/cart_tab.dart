@@ -30,13 +30,7 @@ class _CartTabState extends State<CartTab> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'Cart',
-          style: TextStyle(color: Colors.white),
-        ),
-        backgroundColor: Colors.green,
-      ),
+      appBar: AppBar(title: const Text('Cart')),
       body: Column(
         children: [
           // List of items

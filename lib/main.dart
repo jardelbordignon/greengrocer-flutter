@@ -14,6 +14,14 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'GREENGROCER',
       theme: ThemeData(
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Colors.green,
+          titleTextStyle: TextStyle(
+            color: Colors.white,
+            fontSize: 24,
+          ),
+          iconTheme: IconThemeData(color: Colors.white),
+        ),
         primarySwatch: Colors.green,
         //colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
         scaffoldBackgroundColor: Colors.white.withAlpha(190),

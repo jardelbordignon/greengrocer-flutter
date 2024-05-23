@@ -19,8 +19,6 @@ class _HomeTabState extends State<HomeTab> {
     return Scaffold(
       // App bar
       appBar: AppBar(
-        backgroundColor: Colors.green,
-        elevation: 0,
         centerTitle: true,
         title: Text.rich(TextSpan(
           style: const TextStyle(fontSize: 30),
@@ -50,13 +48,11 @@ class _HomeTabState extends State<HomeTab> {
                 label: const Text(
                   '2',
                   style: TextStyle(
-                    color: Colors.white,
                     fontSize: 12,
                   ),
                 ),
                 child: const Icon(
                   Icons.shopping_cart,
-                  color: Colors.white,
                 ),
               ),
             ),
