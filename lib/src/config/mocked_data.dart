@@ -79,7 +79,7 @@ UserModel user = UserModel(
 
 List<OrderModel> orders = [
   OrderModel(
-    id: '001',
+    id: '003',
     copyAndPaste: '123123a',
     total: 123.45,
     items: cartItems,
@@ -90,6 +90,15 @@ List<OrderModel> orders = [
   OrderModel(
     id: '002',
     copyAndPaste: '123123b',
+    total: 123.45,
+    items: cartItems,
+    status: 'delivered',
+    createdAt: DateTime.now(),
+    paymentOverdueAt: DateTime.now().add(const Duration(days: 5)),
+  ),
+  OrderModel(
+    id: '001',
+    copyAndPaste: '123123c',
     total: 11,
     items: [
       CartItemModel(

@@ -44,7 +44,27 @@ class OrderStatusWidget extends StatelessWidget {
             title: 'Payment overdue',
             backgroundColor: Colors.red,
           ),
-        ]
+        ] else ...[
+          _StatusDot(
+            isActive: currentStatus >= 2,
+            title: 'Paid',
+          ),
+          const _CustomDivider(),
+          _StatusDot(
+            isActive: currentStatus >= 3,
+            title: 'Preparing',
+          ),
+          const _CustomDivider(),
+          _StatusDot(
+            isActive: currentStatus >= 4,
+            title: 'Shipping',
+          ),
+          const _CustomDivider(),
+          _StatusDot(
+            isActive: currentStatus == 5,
+            title: 'Delivered',
+          ),
+        ],
       ],
     );
   }
