@@ -1,3 +1,4 @@
+import 'package:add_to_cart_animation/add_to_cart_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:greengrocer/src/config/custom_colors.dart';
 import 'package:greengrocer/src/config/mocked_data.dart' as mocked_data;
@@ -13,6 +14,17 @@ class HomeTab extends StatefulWidget {
 
 class _HomeTabState extends State<HomeTab> {
   String selectedCategory = mocked_data.categories[0];
+
+  // We can detect the location of the cart by this  GlobalKey<CartIconKey>
+  GlobalKey<CartIconKey> cartKey = GlobalKey<CartIconKey>();
+  late Function(GlobalKey) runAddToCartAnimation;
+  var _cartQuantityItems = 5;
+
+  void itemSelectedCartAnimation(GlobalKey globalKey) async {
+    await runAddToCartAnimation(globalKey);
+    await cartKey.currentState!
+        .runCartAnimation((++_cartQuantityItems).toString());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,99 +52,124 @@ class _HomeTabState extends State<HomeTab> {
         actions: [
           // Cart button
           Padding(
-            padding: const EdgeInsets.only(top: 15, right: 15),
+            padding: const EdgeInsets.only(top: 0, right: 15),
             child: GestureDetector(
               onTap: () {},
-              child: Badge(
-                backgroundColor: CustomColors.customContrastColor,
-                label: const Text(
-                  '2',
-                  style: TextStyle(
-                    fontSize: 12,
-                  ),
+              // child: Badge(
+              //   backgroundColor: CustomColors.customContrastColor,
+              //   label: const Text(
+              //     '2',
+              //     style: TextStyle(
+              //       fontSize: 12,
+              //     ),
+              //   ),
+              child: AddToCartIcon(
+                badgeOptions: const BadgeOptions(
+                  //active: false
+                  backgroundColor: Colors.red,
+                  foregroundColor: Colors.white,
                 ),
-                child: const Icon(
+                key: cartKey,
+                icon: const Icon(
                   Icons.shopping_cart,
                 ),
               ),
             ),
+            //),
           ),
         ],
       ),
 
-      body: Column(
-        children: [
-          // Search bar
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-            child: TextFormField(
-              decoration: InputDecoration(
-                filled: true,
-                fillColor: Colors.white,
-                isDense: true,
-                hintText: 'Search products...',
-                hintStyle: TextStyle(
-                  color: Colors.grey.shade400,
-                  fontSize: 14,
-                ),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(60),
-                  borderSide: const BorderSide(
-                    width: 0,
-                    style: BorderStyle.none,
+      body: AddToCartAnimation(
+        // To send the library the location of the Cart icon
+        cartKey: cartKey,
+        height: 30,
+        width: 30,
+        opacity: 0.85,
+        dragAnimation: const DragToCartAnimationOptions(
+          rotation: true,
+        ),
+        jumpAnimation: const JumpAnimationOptions(),
+        createAddToCartAnimation: (addToCartAnimation) {
+          // You can run the animation by addToCartAnimationMethod, just pass trough the the global key of  the image as parameter
+          runAddToCartAnimation = addToCartAnimation;
+        },
+        // Content
+        child: Column(
+          children: [
+            // Search bar
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              child: TextFormField(
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: Colors.white,
+                  isDense: true,
+                  hintText: 'Search products...',
+                  hintStyle: TextStyle(
+                    color: Colors.grey.shade400,
+                    fontSize: 14,
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(60),
+                    borderSide: const BorderSide(
+                      width: 0,
+                      style: BorderStyle.none,
+                    ),
+                  ),
+                  prefixIcon: Icon(
+                    Icons.search,
+                    color: CustomColors.customContrastColor,
+                    size: 24,
                   ),
                 ),
-                prefixIcon: Icon(
-                  Icons.search,
-                  color: CustomColors.customContrastColor,
-                  size: 24,
+              ),
+            ),
+
+            // Categories selector
+            Container(
+              padding: const EdgeInsets.only(left: 25),
+              height: 40,
+              child: ListView.separated(
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (BuildContext ctx, int index) => CategoryTile(
+                  onTap: () {
+                    setState(() {
+                      selectedCategory = mocked_data.categories[index];
+                    });
+                  },
+                  category: mocked_data.categories[index], // Named parameter
+                  isSelected: mocked_data.categories[index] ==
+                      selectedCategory, // Named parameter
                 ),
+                separatorBuilder: (BuildContext ctx, int index) =>
+                    const SizedBox(width: 10),
+                itemCount: mocked_data.categories.length,
               ),
             ),
-          ),
 
-          // Categories selector
-          Container(
-            padding: const EdgeInsets.only(left: 25),
-            height: 40,
-            child: ListView.separated(
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (BuildContext ctx, int index) => CategoryTile(
-                onTap: () {
-                  setState(() {
-                    selectedCategory = mocked_data.categories[index];
-                  });
+            // Store grid
+            Expanded(
+              child: GridView.builder(
+                padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+                physics: const BouncingScrollPhysics(),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  mainAxisSpacing: 10,
+                  crossAxisSpacing: 10,
+                  childAspectRatio: 9 / 11.5,
+                ),
+                itemCount: mocked_data.items.length,
+                itemBuilder: (BuildContext ctx, int index) {
+                  return ItemTile(
+                    cartAnimationMethod: itemSelectedCartAnimation,
+                    item: mocked_data.items[index],
+                  );
                 },
-                category: mocked_data.categories[index], // Named parameter
-                isSelected: mocked_data.categories[index] ==
-                    selectedCategory, // Named parameter
               ),
-              separatorBuilder: (BuildContext ctx, int index) =>
-                  const SizedBox(width: 10),
-              itemCount: mocked_data.categories.length,
             ),
-          ),
-
-          // Store grid
-          Expanded(
-            child: GridView.builder(
-              padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-              physics: const BouncingScrollPhysics(),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                mainAxisSpacing: 10,
-                crossAxisSpacing: 10,
-                childAspectRatio: 9 / 11.5,
-              ),
-              itemCount: mocked_data.items.length,
-              itemBuilder: (BuildContext ctx, int index) {
-                return ItemTile(
-                  item: mocked_data.items[index],
-                );
-              },
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
