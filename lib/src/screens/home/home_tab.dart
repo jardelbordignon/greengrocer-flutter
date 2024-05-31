@@ -4,6 +4,7 @@ import 'package:greengrocer/src/config/custom_colors.dart';
 import 'package:greengrocer/src/config/mocked_data.dart' as mocked_data;
 import 'package:greengrocer/src/screens/home/components/category_tile.dart';
 import 'package:greengrocer/src/screens/home/components/item_tile.dart';
+import 'package:greengrocer/src/services/utils_services.dart';
 
 class HomeTab extends StatefulWidget {
   const HomeTab({super.key});
@@ -54,7 +55,13 @@ class _HomeTabState extends State<HomeTab> {
           Padding(
             padding: const EdgeInsets.only(top: 0, right: 15),
             child: GestureDetector(
-              onTap: () {},
+              onTap: () {
+                utilsServices.showToast(
+                  context,
+                  title: 'My Cart',
+                  message: 'This is my cart',
+                );
+              },
               // child: Badge(
               //   backgroundColor: CustomColors.customContrastColor,
               //   label: const Text(
