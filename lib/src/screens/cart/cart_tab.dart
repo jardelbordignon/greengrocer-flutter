@@ -17,6 +17,11 @@ class _CartTabState extends State<CartTab> {
   void removeItemFromCart(CartItemModel cartItem) {
     setState(() {
       mocked_data.cartItems.remove(cartItem);
+
+      utilsServices.showToast(
+        context,
+        message: '${cartItem.item.name} removed from cart',
+      );
     });
   }
 
@@ -85,6 +90,12 @@ class _CartTabState extends State<CartTab> {
                           context: context,
                           builder: (context) =>
                               PaymentDialog(order: mocked_data.orders.first),
+                        );
+                      } else {
+                        utilsServices.showToast(
+                          context,
+                          message: 'You canceled the order',
+                          type: ToastType.warning,
                         );
                       }
                     },

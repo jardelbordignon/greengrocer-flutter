@@ -20,8 +20,8 @@ class UtilsServices {
 
   void showToast(
     BuildContext context, {
-    required String title,
     required String message,
+    String? title,
     IconData? icon,
     ToastType type = ToastType.info,
     Text? action,
@@ -41,7 +41,7 @@ class UtilsServices {
         'themeColor': Colors.green,
       },
       ToastType.info: {
-        'icon': Icons.info_outline,
+        'icon': Icons.info,
         'themeColor': Colors.blue,
       },
     };
@@ -50,15 +50,18 @@ class UtilsServices {
       icon: icon ?? theme[type]!['icon'] as IconData,
       iconColor: theme[type]!['themeColor'] as Color,
       themeColor: theme[type]!['themeColor'] as Color,
-      title: Text(
-        title,
-        style: TextStyle(
-          color: theme[type]!['themeColor'] as Color,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
+      title: title is String
+          ? Text(
+              title,
+              style: TextStyle(
+                color: theme[type]!['themeColor'] as Color,
+                fontWeight: FontWeight.bold,
+              ),
+            )
+          : null,
       description: Text(message),
       enableIconAnimation: false,
+      toastPosition: Position.bottom,
       animationType: AnimationType.fromLeft,
       animationDuration: const Duration(milliseconds: 500),
       toastDuration: const Duration(milliseconds: 4000),
