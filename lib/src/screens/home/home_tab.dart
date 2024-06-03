@@ -5,6 +5,7 @@ import 'package:greengrocer/src/config/mocked_data.dart' as mocked_data;
 import 'package:greengrocer/src/screens/home/components/category_tile.dart';
 import 'package:greengrocer/src/screens/home/components/item_tile.dart';
 import 'package:greengrocer/src/screens/shared_widgets/app_name_widget.dart';
+import 'package:greengrocer/src/screens/shared_widgets/app_shimmer.dart';
 import 'package:greengrocer/src/services/utils_services.dart';
 
 class HomeTab extends StatefulWidget {
@@ -26,6 +27,18 @@ class _HomeTabState extends State<HomeTab> {
     await runAddToCartAnimation(globalKey);
     await cartKey.currentState!
         .runCartAnimation((++_cartQuantityItems).toString());
+  }
+
+  bool isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(const Duration(seconds: 3), () {
+      setState(() {
+        isLoading = false;
+      });
+    });
   }
 
   @override
@@ -122,43 +135,77 @@ class _HomeTabState extends State<HomeTab> {
             Container(
               padding: const EdgeInsets.only(left: 25),
               height: 40,
-              child: ListView.separated(
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (BuildContext ctx, int index) => CategoryTile(
-                  onTap: () {
-                    setState(() {
-                      selectedCategory = mocked_data.categories[index];
-                    });
-                  },
-                  category: mocked_data.categories[index], // Named parameter
-                  isSelected: mocked_data.categories[index] ==
-                      selectedCategory, // Named parameter
-                ),
-                separatorBuilder: (BuildContext ctx, int index) =>
-                    const SizedBox(width: 10),
-                itemCount: mocked_data.categories.length,
-              ),
+              child: isLoading
+                  ? ListView(
+                      scrollDirection: Axis.horizontal,
+                      children: List.generate(
+                        10,
+                        (index) => Container(
+                          alignment: Alignment.center,
+                          margin: const EdgeInsets.only(right: 12),
+                          child: AppShimmer(
+                            height: 20,
+                            width: 80,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                      ),
+                    )
+                  : ListView.separated(
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (BuildContext ctx, int index) =>
+                          CategoryTile(
+                        onTap: () {
+                          setState(() {
+                            selectedCategory = mocked_data.categories[index];
+                          });
+                        },
+                        category:
+                            mocked_data.categories[index], // Named parameter
+                        isSelected: mocked_data.categories[index] ==
+                            selectedCategory, // Named parameter
+                      ),
+                      separatorBuilder: (BuildContext ctx, int index) =>
+                          const SizedBox(width: 10),
+                      itemCount: mocked_data.categories.length,
+                    ),
             ),
 
             // Store grid
             Expanded(
-              child: GridView.builder(
-                padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-                physics: const BouncingScrollPhysics(),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 10,
-                  crossAxisSpacing: 10,
-                  childAspectRatio: 9 / 11.5,
-                ),
-                itemCount: mocked_data.items.length,
-                itemBuilder: (BuildContext ctx, int index) {
-                  return ItemTile(
-                    cartAnimationMethod: itemSelectedCartAnimation,
-                    item: mocked_data.items[index],
-                  );
-                },
-              ),
+              child: isLoading
+                  ? GridView.count(
+                      padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+                      physics: const BouncingScrollPhysics(),
+                      crossAxisCount: 2,
+                      mainAxisSpacing: 10,
+                      crossAxisSpacing: 10,
+                      childAspectRatio: 9 / 11.5,
+                      children: List.generate(
+                        10,
+                        (index) => AppShimmer(
+                          height: double.infinity,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ))
+                  : GridView.builder(
+                      padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+                      physics: const BouncingScrollPhysics(),
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        mainAxisSpacing: 10,
+                        crossAxisSpacing: 10,
+                        childAspectRatio: 9 / 11.5,
+                      ),
+                      itemCount: mocked_data.items.length,
+                      itemBuilder: (BuildContext ctx, int index) {
+                        return ItemTile(
+                          cartAnimationMethod: itemSelectedCartAnimation,
+                          item: mocked_data.items[index],
+                        );
+                      },
+                    ),
             ),
           ],
         ),
