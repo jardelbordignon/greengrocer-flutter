@@ -4,6 +4,7 @@ import 'package:greengrocer/src/config/custom_colors.dart';
 import 'package:greengrocer/src/config/mocked_data.dart' as mocked_data;
 import 'package:greengrocer/src/screens/home/components/category_tile.dart';
 import 'package:greengrocer/src/screens/home/components/item_tile.dart';
+import 'package:greengrocer/src/screens/shared_widgets/app_name_widget.dart';
 import 'package:greengrocer/src/services/utils_services.dart';
 
 class HomeTab extends StatefulWidget {
@@ -33,23 +34,7 @@ class _HomeTabState extends State<HomeTab> {
       // App bar
       appBar: AppBar(
         centerTitle: true,
-        title: Text.rich(TextSpan(
-          style: const TextStyle(fontSize: 30),
-          children: [
-            const TextSpan(
-              text: 'Green',
-              style: TextStyle(
-                color: Colors.white,
-              ),
-            ),
-            TextSpan(
-              text: 'grocer',
-              style: TextStyle(
-                color: CustomColors.customContrastColor,
-              ),
-            ),
-          ],
-        )),
+        title: const AppNameWidget(),
         actions: [
           // Cart button
           Padding(
