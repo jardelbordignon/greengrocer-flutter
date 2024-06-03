@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:greengrocer/src/models/cart_item_model.dart';
 import 'package:greengrocer/src/models/order_model.dart';
 import 'package:greengrocer/src/screens/shared_widgets/payment_dialog.dart';
@@ -149,7 +147,6 @@ class _OrderItemWidget extends StatelessWidget {
   final CartItemModel orderItem;
 
   const _OrderItemWidget({
-    super.key,
     required this.orderItem,
   });
 

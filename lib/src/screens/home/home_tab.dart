@@ -19,7 +19,7 @@ class _HomeTabState extends State<HomeTab> {
   // We can detect the location of the cart by this  GlobalKey<CartIconKey>
   GlobalKey<CartIconKey> cartKey = GlobalKey<CartIconKey>();
   late Function(GlobalKey) runAddToCartAnimation;
-  var _cartQuantityItems = 5;
+  var _cartQuantityItems = 0;
 
   void itemSelectedCartAnimation(GlobalKey globalKey) async {
     await runAddToCartAnimation(globalKey);
