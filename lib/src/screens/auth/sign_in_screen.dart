@@ -2,6 +2,7 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:greengrocer/src/config/mocked_data.dart' as mocked_data;
+import 'package:greengrocer/src/screens/auth/controller/auth_controller.dart';
 import 'package:greengrocer/src/screens/router.dart';
 import 'package:greengrocer/src/screens/shared_widgets/app_name_widget.dart';
 import 'package:greengrocer/src/screens/shared_widgets/app_text_field.dart';
@@ -98,35 +99,53 @@ class SignInScreen extends StatelessWidget {
                       SizedBox(
                         height: 50,
                         //width: 200,
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            backgroundColor: Colors.green,
-                          ),
-                          onPressed: () {
-                            // when sign in replace navigation stack with BaseScreen
-                            // Navigator.of(context).pushReplacement(
-                            //     MaterialPageRoute(builder: (context) {
-                            //   return const BaseScreen();
-                            // }));
-                            if (_formKey.currentState!.validate()) {
-                              String email = emailController.text;
-                              String password = passwordController.text;
+                        child: GetX<AuthController>(
+                          builder: (authController) {
+                            return ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                backgroundColor: Colors.green,
+                              ),
+                              onPressed: authController.isLoading.value
+                                  ? null
+                                  : () async {
+                                      // close keyboard
+                                      FocusScope.of(context).unfocus();
 
-                              print('E-mail: $email - Senha: $password');
+                                      if (_formKey.currentState!.validate()) {
+                                        String email = emailController.text;
+                                        String password =
+                                            passwordController.text;
 
-                              Get.offNamed(Routes.base);
-                            }
+                                        bool result =
+                                            await authController.signIn(
+                                          email: email,
+                                          password: password,
+                                        );
+
+                                        if (result) {
+                                          Get.offNamed(Routes.base);
+                                        }
+                                      }
+                                    },
+                              child: authController.isLoading.value
+                                  ? const SizedBox(
+                                      width: 24,
+                                      height: 24,
+                                      child: CircularProgressIndicator(
+                                          strokeWidth: 2),
+                                    )
+                                  : const Text(
+                                      'Sign In',
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                            );
                           },
-                          child: const Text(
-                            'Sign In',
-                            style: TextStyle(
-                              fontSize: 18,
-                              color: Colors.white,
-                            ),
-                          ),
                         ),
                       ),
 

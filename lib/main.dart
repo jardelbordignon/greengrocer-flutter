@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:greengrocer/src/screens/auth/controller/auth_controller.dart';
 import 'package:greengrocer/src/screens/router.dart';
 
 void main() {
+  Get.lazyPut(() => AuthController()); // Injecting a instance of AuthController
   runApp(const MyApp());
 }
 
