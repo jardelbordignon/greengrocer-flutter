@@ -47,6 +47,7 @@ dependencies:
   cherry_toast: ^1.10.1
   shimmer: ^3.0.0
   get: ^4.6.6
+  zod_validation: ^1.0.5
 
 dev_dependencies:
   flutter_test:

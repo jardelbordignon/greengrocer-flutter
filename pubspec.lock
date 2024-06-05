@@ -376,6 +376,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.1.2"
+  zod_validation:
+    dependency: "direct main"
+    description:
+      name: zod_validation
+      sha256: "10d1aba1212b4d3f4223b18db984dec2d3b91a5dcd22cbceedf91512baf05944"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.5"
 sdks:
   dart: ">=3.3.4 <4.0.0"
   flutter: ">=3.13.0"

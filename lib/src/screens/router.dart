@@ -6,7 +6,7 @@ import 'package:greengrocer/src/screens/splash/splash_screen.dart';
 
 abstract class Pages {
   static final list = <GetPage>[
-    GetPage(name: Routes.signIn, page: () => const SignInScreen()),
+    GetPage(name: Routes.signIn, page: () => SignInScreen()),
     GetPage(name: Routes.signUp, page: () => SignUpScreen()),
     GetPage(name: Routes.splash, page: () => const SplashScreen()),
     GetPage(name: Routes.base, page: () => const BaseScreen()),
