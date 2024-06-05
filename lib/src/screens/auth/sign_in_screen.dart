@@ -13,6 +13,9 @@ class SignInScreen extends StatelessWidget {
 
   final _formKey = GlobalKey<FormState>();
 
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -79,6 +82,7 @@ class SignInScreen extends StatelessWidget {
                       AppTextField(
                         icon: Icons.email,
                         label: 'Email',
+                        controller: emailController,
                         validator: Zod().min(6).email().build,
                       ),
                       // Password
@@ -86,6 +90,7 @@ class SignInScreen extends StatelessWidget {
                         icon: Icons.lock,
                         label: 'Password',
                         isSecret: true,
+                        controller: passwordController,
                         validator: Zod().min(7).password().build,
                       ),
 
@@ -107,6 +112,11 @@ class SignInScreen extends StatelessWidget {
                             //   return const BaseScreen();
                             // }));
                             if (_formKey.currentState!.validate()) {
+                              String email = emailController.text;
+                              String password = passwordController.text;
+
+                              print('E-mail: $email - Senha: $password');
+
                               Get.offNamed(Routes.base);
                             }
                           },
