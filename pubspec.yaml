@@ -46,6 +46,7 @@ dependencies:
   add_to_cart_animation: ^2.0.3
   cherry_toast: ^1.10.1
   shimmer: ^3.0.0
+  get: ^4.6.6
 
 dev_dependencies:
   flutter_test:

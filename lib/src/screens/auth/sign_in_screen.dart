@@ -1,10 +1,10 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:greengrocer/src/config/mocked_data.dart' as mocked_data;
+import 'package:greengrocer/src/screens/router.dart';
 import 'package:greengrocer/src/screens/shared_widgets/app_name_widget.dart';
 import 'package:greengrocer/src/screens/shared_widgets/app_text_field.dart';
-import 'package:greengrocer/src/screens/auth/sign_up_screen.dart';
-import 'package:greengrocer/src/screens/base/base_screen.dart';
 import 'package:greengrocer/src/config/custom_colors.dart';
 
 class SignInScreen extends StatelessWidget {
@@ -95,10 +95,11 @@ class SignInScreen extends StatelessWidget {
                         ),
                         onPressed: () {
                           // when sign in replace navigation stack with BaseScreen
-                          Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(builder: (context) {
-                            return const BaseScreen();
-                          }));
+                          // Navigator.of(context).pushReplacement(
+                          //     MaterialPageRoute(builder: (context) {
+                          //   return const BaseScreen();
+                          // }));
+                          Get.offNamed(Routes.base);
                         },
                         child: const Text(
                           'Sign In',
@@ -160,13 +161,14 @@ class SignInScreen extends StatelessWidget {
                           ),
                         ),
                         onPressed: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) {
-                                return SignUpScreen();
-                              },
-                            ),
-                          );
+                          // Navigator.of(context).push(
+                          //   MaterialPageRoute(
+                          //     builder: (context) {
+                          //       return SignUpScreen();
+                          //     },
+                          //   ),
+                          // );
+                          Get.toNamed(Routes.signUp);
                         },
                         child: const Text(
                           'Sign Up',
