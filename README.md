@@ -1,5 +1,7 @@
 # greengrocer
 
+An introductory study on flutter GetX is at this link https://zapp.run/edit/flutter-getx-zld606vild70
+
 A new Flutter project.
 
 ## Getting Started
