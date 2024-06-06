@@ -92,7 +92,7 @@ class SignInScreen extends StatelessWidget {
                         label: 'Password',
                         isSecret: true,
                         controller: passwordController,
-                        validator: Zod().min(7).password().build,
+                        validator: Zod().min(7).build,
                       ),
 
                       // Sign In button
