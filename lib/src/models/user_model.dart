@@ -54,7 +54,7 @@ class UserModel {
   Map<String, dynamic> toJson() => _$UserModelToJson(this);
 
   // run build_runner to generate user_model.g.dart
-  // flutter pub run build_runner build
+  // dart run build_runner build
 
   @override
   String toString() {

@@ -17,6 +17,22 @@ class SignInScreen extends StatelessWidget {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
+  void handleSignIn(BuildContext context, AuthController authController) async {
+    // close keyboard
+    FocusScope.of(context).unfocus();
+
+    if (_formKey.currentState!.validate()) {
+      String email = emailController.text;
+      String password = passwordController.text;
+
+      bool authSuccess = await authController.signIn(email, password);
+
+      if (authSuccess) {
+        Get.offNamed(Routes.base);
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -44,14 +60,6 @@ class SignInScreen extends StatelessWidget {
                         child: AnimatedTextKit(
                           repeatForever: true,
                           pause: Duration.zero,
-                          // animatedTexts: [
-                          //   FadeAnimatedText('Frutas'),
-                          //   FadeAnimatedText('Verduras'),
-                          //   FadeAnimatedText('Legumes'),
-                          //   FadeAnimatedText('Carnes'),
-                          //   FadeAnimatedText('Cereais'),
-                          //   FadeAnimatedText('Laticínios'),
-                          // ],
                           animatedTexts: mocked_data.categories
                               .map((category) => FadeAnimatedText(category))
                               .toList(),
@@ -110,26 +118,7 @@ class SignInScreen extends StatelessWidget {
                               ),
                               onPressed: authController.isLoading.value
                                   ? null
-                                  : () async {
-                                      // close keyboard
-                                      FocusScope.of(context).unfocus();
-
-                                      if (_formKey.currentState!.validate()) {
-                                        String email = emailController.text;
-                                        String password =
-                                            passwordController.text;
-
-                                        bool result =
-                                            await authController.signIn(
-                                          email: email,
-                                          password: password,
-                                        );
-
-                                        if (result) {
-                                          Get.offNamed(Routes.base);
-                                        }
-                                      }
-                                    },
+                                  : () => handleSignIn(context, authController),
                               child: authController.isLoading.value
                                   ? const SizedBox(
                                       width: 24,
