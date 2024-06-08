@@ -1,4 +1,5 @@
 import 'package:greengrocer/src/constants/endpoints.dart';
+import 'package:greengrocer/src/models/user_model.dart';
 import 'package:greengrocer/src/services/http_manager.dart';
 
 class AuthRepository {
@@ -6,12 +7,13 @@ class AuthRepository {
     httpManager.request(
       url: Endpoints.signIn,
       method: HttpMethods.post,
-      body: { 'email': email, 'password': password },
+      body: {'email': email, 'password': password},
       onError: (error) {
         print(error);
       },
       onSuccess: (data) {
-        print(data);
+        final user = UserModel.fromJson(data['result']);
+        print(user);
       },
     );
   }
