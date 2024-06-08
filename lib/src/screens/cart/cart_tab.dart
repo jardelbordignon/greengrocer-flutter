@@ -19,7 +19,6 @@ class _CartTabState extends State<CartTab> {
       mocked_data.cartItems.remove(cartItem);
 
       utilsServices.showToast(
-        context,
         message: '${cartItem.item.name} removed from cart',
       );
     });
@@ -93,7 +92,6 @@ class _CartTabState extends State<CartTab> {
                         );
                       } else {
                         utilsServices.showToast(
-                          context,
                           message: 'You canceled the order',
                           type: ToastType.warning,
                         );

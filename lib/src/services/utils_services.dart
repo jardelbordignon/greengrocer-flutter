@@ -1,12 +1,19 @@
 import 'package:cherry_toast/cherry_toast.dart';
 import 'package:cherry_toast/resources/arrays.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 
 enum ToastType { warning, error, success, info }
 
 class UtilsServices {
+  BuildContext? _context;
+
+  UtilsServices({BuildContext? context}) {
+    _context = context ?? Get.context;
+  }
+
   String priceToCurrency(double price, {String? locale = 'pt_BR'}) {
     NumberFormat numberFormat = NumberFormat.simpleCurrency(locale: locale);
     return numberFormat.format(price);
@@ -18,14 +25,14 @@ class UtilsServices {
     return DateFormat.yMd(locale).add_Hm().format(dateTime);
   }
 
-  void showToast(
-    BuildContext context, {
+  void showToast({
     required String message,
     String? title,
     IconData? icon,
     ToastType type = ToastType.info,
     Text? action,
     Function? actionHandler,
+    BuildContext? context,
   }) {
     var theme = {
       ToastType.warning: {
@@ -62,26 +69,13 @@ class UtilsServices {
       description: Text(message),
       enableIconAnimation: false,
       toastPosition: Position.bottom,
-      animationType: AnimationType.fromLeft,
+      animationType: AnimationType.fromBottom,
       animationDuration: const Duration(milliseconds: 500),
       toastDuration: const Duration(milliseconds: 4000),
       action: action,
       actionHandler: actionHandler,
       autoDismiss: true,
-    ).show(context);
-
-    // CherryToast.info(
-    //   description: const Text(
-    //     "All information may be deleted after this action",
-    //     style: TextStyle(color: Colors.black),
-    //   ),
-    //   enableIconAnimation: false,
-    //   animationType: AnimationType.fromLeft,
-    //   animationDuration: const Duration(milliseconds: 500),
-    //   toastDuration: const Duration(milliseconds: 4000),
-    //   action: action,
-    //   actionHandler: actionHandler,
-    // ).show(context);
+    ).show(context ?? _context!);
   }
 }
 

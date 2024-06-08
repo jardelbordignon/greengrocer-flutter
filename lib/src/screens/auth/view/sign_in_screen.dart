@@ -14,24 +14,9 @@ class SignInScreen extends StatelessWidget {
 
   final _formKey = GlobalKey<FormState>();
 
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
-
-  void handleSignIn(BuildContext context, AuthController authController) async {
-    // close keyboard
-    FocusScope.of(context).unfocus();
-
-    if (_formKey.currentState!.validate()) {
-      String email = emailController.text;
-      String password = passwordController.text;
-
-      bool authSuccess = await authController.signIn(email, password);
-
-      if (authSuccess) {
-        Get.offNamed(Routes.base);
-      }
-    }
-  }
+  final emailController =
+      TextEditingController(text: 'greengrocerteste@gmail.com');
+  final passwordController = TextEditingController(text: 'senha123');
 
   @override
   Widget build(BuildContext context) {
@@ -118,7 +103,16 @@ class SignInScreen extends StatelessWidget {
                               ),
                               onPressed: authController.isLoading.value
                                   ? null
-                                  : () => handleSignIn(context, authController),
+                                  : () async {
+                                      FocusScope.of(context).unfocus();
+
+                                      if (_formKey.currentState!.validate()) {
+                                        authController.signIn(
+                                          emailController.text,
+                                          passwordController.text,
+                                        );
+                                      }
+                                    },
                               child: authController.isLoading.value
                                   ? const SizedBox(
                                       width: 24,
