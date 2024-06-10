@@ -21,7 +21,8 @@ class AuthController extends GetxController {
   }
 
   Future<void> saveTokenAndProceedToBase() async {
-    await localStorage.set(StorageKeys.token, user.token!, ttlMinutes: 2);
+    await localStorage.set(StorageKeys.token, user.token!,
+        ttlMinutes: 60 * 24 * 10);
     Get.offAllNamed(Routes.base);
   }
 
