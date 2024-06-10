@@ -7,7 +7,8 @@ import 'package:greengrocer/src/screens/router.dart';
 
 Future<void> main() async {
   await dotenv.load();
-  Get.lazyPut(() => AuthController()); // Injecting a instance of AuthController
+  WidgetsFlutterBinding.ensureInitialized();
+  Get.put(AuthController()); // Injecting a instance of AuthController
   runApp(const MyApp());
 }
 

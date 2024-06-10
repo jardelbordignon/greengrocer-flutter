@@ -5,6 +5,7 @@ import 'package:greengrocer/src/screens/auth/repository/auth_repository.dart';
 import 'package:greengrocer/src/screens/auth/response/auth_response.dart';
 import 'package:greengrocer/src/screens/router.dart';
 import 'package:greengrocer/src/services/local_storage.dart';
+import 'package:greengrocer/src/services/utils_services.dart';
 
 class AuthController extends GetxController {
   RxBool isLoading = false.obs;
@@ -13,8 +14,14 @@ class AuthController extends GetxController {
 
   UserModel user = UserModel();
 
+  @override
+  void onInit() {
+    super.onInit();
+    validateToken();
+  }
+
   Future<void> saveTokenAndProceedToBase() async {
-    await localStorage.set(StorageKeys.token, user.token!, ttlMinutes: 60 * 24);
+    await localStorage.set(StorageKeys.token, user.token!, ttlMinutes: 2);
     Get.offAllNamed(Routes.base);
   }
 
@@ -28,11 +35,14 @@ class AuthController extends GetxController {
     response.when(
       success: (user) {
         this.user = user;
-
         saveTokenAndProceedToBase();
       },
       error: (message) {
-        signOut();
+        utilsServices.showToast(
+          message: message,
+          type: ToastType.error,
+        );
+        Get.offAllNamed(Routes.signIn);
       },
     );
   }
@@ -58,9 +68,11 @@ class AuthController extends GetxController {
     response.when(
       success: (user) {
         this.user = user;
+
+        saveTokenAndProceedToBase();
       },
       error: (message) {
-        Get.offAllNamed(Routes.signIn);
+        signOut();
       },
     );
   }

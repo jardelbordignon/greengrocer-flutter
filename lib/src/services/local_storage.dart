@@ -7,9 +7,14 @@ class LocalStorage {
 
   Future<String?> get(String key) async {
     String? storedData = await _storage.read(key: key);
+
     if (storedData == null || storedData.isEmpty) return null;
     Map<String, dynamic> data = Map.from(jsonDecode(storedData));
-    if (data['expiresIn'] != null && data['expiresIn'] < DateTime.now()) {
+
+    final bool isExpired = data.containsKey('expiresIn') &&
+        DateTime.parse(data['expiresIn']).isBefore(DateTime.now());
+
+    if (isExpired) {
       await _storage.delete(key: key);
       return null;
     }
@@ -20,7 +25,8 @@ class LocalStorage {
     Map<String, dynamic> data = ttlMinutes != null
         ? {
             'value': value,
-            'expiresIn': DateTime.now().add(Duration(minutes: ttlMinutes))
+            'expiresIn':
+                DateTime.now().add(Duration(minutes: ttlMinutes)).toString(),
           }
         : {'value': value};
     await _storage.write(key: key, value: jsonEncode(data));
