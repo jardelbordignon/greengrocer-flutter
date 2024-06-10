@@ -12,6 +12,21 @@ class AuthRepository {
       body: {'email': email, 'password': password},
     );
 
+    return _handleHttpResponse(response);
+  }
+
+  Future<AuthResponse> validateToken(String token) async {
+    final response = await httpManager.request(
+      url: Endpoints.validateToken,
+      method: HttpMethods.post,
+      headers: {'X-Parse-Session-Token': token},
+    );
+
+    return _handleHttpResponse(response);
+  }
+
+  Future<AuthResponse> _handleHttpResponse(
+      Map<dynamic, dynamic> response) async {
     if (response['result'] != null) {
       final user = UserModel.fromJson(response['result']);
       return AuthResponse.success(user);
