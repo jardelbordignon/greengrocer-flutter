@@ -12,6 +12,7 @@ class AppTextField extends StatefulWidget {
   final void Function(String?)? onSaved;
   final TextEditingController? controller;
   final TextInputType? textInputType;
+  final GlobalKey<FormFieldState>? formFieldKey;
 
   const AppTextField({
     super.key,
@@ -25,6 +26,7 @@ class AppTextField extends StatefulWidget {
     this.onSaved,
     this.controller,
     this.textInputType,
+    this.formFieldKey,
   });
 
   @override
@@ -45,6 +47,7 @@ class _AppTextFieldState extends State<AppTextField> {
     return Padding(
       padding: const EdgeInsets.only(bottom: 15),
       child: TextFormField(
+        key: widget.formFieldKey,
         initialValue: widget.initialValue,
         readOnly: widget.readOnly,
         inputFormatters: widget.inputFormatters,
