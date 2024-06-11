@@ -24,6 +24,14 @@ class AuthRepository {
     return _handleHttpResponse(response);
   }
 
+  Future<void> resetPassword(String email) async {
+    await httpManager.request(
+      url: Endpoints.resetPassword,
+      method: HttpMethods.post,
+      body: {'email': email},
+    );
+  }
+
   Future<AuthResponse> validateToken(String token) async {
     final response = await httpManager.request(
       url: Endpoints.validateToken,

@@ -8,6 +8,7 @@ import 'package:greengrocer/src/screens/router.dart';
 import 'package:greengrocer/src/screens/shared_widgets/app_name_widget.dart';
 import 'package:greengrocer/src/screens/shared_widgets/app_text_field.dart';
 import 'package:greengrocer/src/config/custom_colors.dart';
+import 'package:greengrocer/src/services/utils_services.dart';
 import 'package:zod_validation/zod_validation.dart';
 
 class SignInScreen extends StatelessWidget {
@@ -136,13 +137,20 @@ class SignInScreen extends StatelessWidget {
                       Align(
                         alignment: Alignment.centerRight,
                         child: TextButton(
-                          onPressed: () {
-                            showDialog(
+                          onPressed: () async {
+                            final bool? result = await showDialog(
                               context: context,
                               builder: (_) => ForgotPasswordDialog(
                                 email: emailController.text,
                               ),
                             );
+
+                            if (result ?? false) {
+                              utilsServices.showToast(
+                                message:
+                                    'A recovery link has been sent to your email',
+                              );
+                            }
                           },
                           child: Text(
                             'Forgot Password?',
