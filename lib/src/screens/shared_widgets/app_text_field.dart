@@ -10,6 +10,7 @@ class AppTextField extends StatefulWidget {
   final bool readOnly;
   final String? Function(String?)? validator;
   final TextEditingController? controller;
+  final TextInputType? textInputType;
 
   const AppTextField({
     super.key,
@@ -21,6 +22,7 @@ class AppTextField extends StatefulWidget {
     this.readOnly = false,
     this.validator,
     this.controller,
+    this.textInputType,
   });
 
   @override
@@ -46,6 +48,7 @@ class _AppTextFieldState extends State<AppTextField> {
         inputFormatters: widget.inputFormatters,
         obscureText: isObscure,
         validator: widget.validator,
+        keyboardType: widget.textInputType,
         controller: widget.controller,
         decoration: InputDecoration(
           prefixIcon: Icon(widget.icon),
