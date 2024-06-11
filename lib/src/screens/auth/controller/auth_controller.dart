@@ -76,6 +76,7 @@ class AuthController extends GetxController {
   }
 
   Future<void> validateToken() async {
+    //await localStorage.deleteAll();
     String? token = await localStorage.get(StorageKeys.token);
 
     if (token == null) {

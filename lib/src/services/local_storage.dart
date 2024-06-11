@@ -7,6 +7,7 @@ class LocalStorage {
 
   Future<String?> get(String key) async {
     String? storedData = await _storage.read(key: key);
+    //print('localStorage.get data:\n$storedData');
 
     if (storedData == null || storedData.isEmpty) return null;
     Map<String, dynamic> data = Map.from(jsonDecode(storedData));
@@ -30,6 +31,7 @@ class LocalStorage {
           }
         : {'value': value};
     await _storage.write(key: key, value: jsonEncode(data));
+    //print('localStorage.set data:\n$data');
   }
 
   Future<bool> containsKey(String key) async {

@@ -14,9 +14,8 @@ class SignInScreen extends StatelessWidget {
 
   final _formKey = GlobalKey<FormState>();
 
-  final emailController =
-      TextEditingController(text: 'greengrocerteste@gmail.com');
-  final passwordController = TextEditingController(text: 'senha123');
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -86,7 +85,7 @@ class SignInScreen extends StatelessWidget {
                         label: 'Password',
                         isSecret: true,
                         controller: passwordController,
-                        validator: Zod().min(7).build,
+                        validator: Zod().password().build,
                       ),
 
                       // Sign In button

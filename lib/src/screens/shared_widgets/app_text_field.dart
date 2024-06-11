@@ -9,6 +9,7 @@ class AppTextField extends StatefulWidget {
   final String? initialValue;
   final bool readOnly;
   final String? Function(String?)? validator;
+  final void Function(String?)? onSaved;
   final TextEditingController? controller;
   final TextInputType? textInputType;
 
@@ -21,6 +22,7 @@ class AppTextField extends StatefulWidget {
     this.initialValue,
     this.readOnly = false,
     this.validator,
+    this.onSaved,
     this.controller,
     this.textInputType,
   });
@@ -48,6 +50,7 @@ class _AppTextFieldState extends State<AppTextField> {
         inputFormatters: widget.inputFormatters,
         obscureText: isObscure,
         validator: widget.validator,
+        onSaved: widget.onSaved,
         keyboardType: widget.textInputType,
         controller: widget.controller,
         decoration: InputDecoration(

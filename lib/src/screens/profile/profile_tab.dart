@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import 'package:greengrocer/src/config/mocked_data.dart' as mocked_data;
+import 'package:greengrocer/src/screens/auth/controller/auth_controller.dart';
 import 'package:greengrocer/src/screens/shared_widgets/app_text_field.dart';
 
 class ProfileTab extends StatefulWidget {
@@ -11,6 +13,8 @@ class ProfileTab extends StatefulWidget {
 }
 
 class _ProfileTabState extends State<ProfileTab> {
+  final authController = Get.find<AuthController>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,7 +22,9 @@ class _ProfileTabState extends State<ProfileTab> {
         title: const Text('Profile'),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              authController.signOut();
+            },
             icon: const Icon(
               Icons.logout,
             ),

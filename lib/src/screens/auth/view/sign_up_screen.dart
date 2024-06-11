@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:greengrocer/src/screens/auth/controller/auth_controller.dart';
 import 'package:greengrocer/src/screens/shared_widgets/app_text_field.dart';
 import 'package:greengrocer/src/config/custom_colors.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
@@ -17,6 +19,7 @@ class SignUpScreen extends StatelessWidget {
   );
 
   final _formKey = GlobalKey<FormState>();
+  final authController = Get.find<AuthController>();
 
   @override
   Widget build(BuildContext context) {
@@ -86,17 +89,26 @@ class SignUpScreen extends StatelessWidget {
                             label: 'Email',
                             validator: Zod().min(6).email().build,
                             textInputType: TextInputType.emailAddress,
+                            onSaved: (value) {
+                              authController.user.email = value;
+                            },
                           ),
                           AppTextField(
                             icon: Icons.lock,
                             label: 'Password',
                             isSecret: true,
-                            validator: Zod().min(7).build,
+                            validator: Zod().password().build,
+                            onSaved: (value) {
+                              authController.user.password = value;
+                            },
                           ),
                           AppTextField(
                             icon: Icons.person,
                             label: 'Name',
                             validator: Zod().type<String>().min(3).build,
+                            onSaved: (value) {
+                              authController.user.name = value;
+                            },
                           ),
                           AppTextField(
                             icon: Icons.phone,
@@ -104,33 +116,57 @@ class SignUpScreen extends StatelessWidget {
                             inputFormatters: [phoneFormatter],
                             textInputType: TextInputType.number,
                             validator: Zod().min(14).build,
+                            onSaved: (value) {
+                              authController.user.phone = value;
+                            },
                           ),
                           AppTextField(
-                              icon: Icons.file_copy,
-                              label: 'Document Number',
-                              inputFormatters: [cpfFormatter],
-                              textInputType: TextInputType.number,
-                              validator: Zod().cpf().build),
+                            icon: Icons.file_copy,
+                            label: 'Document Number',
+                            inputFormatters: [cpfFormatter],
+                            textInputType: TextInputType.number,
+                            validator: Zod().cpf().build,
+                            onSaved: (value) {
+                              authController.user.document = value;
+                            },
+                          ),
                           SizedBox(
                             height: 50,
-                            child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10),
+                            child: Obx(
+                              () => ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  backgroundColor: Colors.green,
                                 ),
-                                backgroundColor: Colors.green,
-                              ),
-                              onPressed: () {
-                                if (_formKey.currentState!.validate()) {
-                                  print('Validated');
-                                }
-                              },
-                              child: const Text(
-                                'Sign Up Now',
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  color: Colors.white,
-                                ),
+                                onPressed: authController.isLoading.value
+                                    ? null
+                                    : () async {
+                                        FocusScope.of(context).unfocus();
+
+                                        if (_formKey.currentState!.validate()) {
+                                          // activates onSaved methods in the AppTextFields
+                                          _formKey.currentState!.save();
+
+                                          //print(authController.user);
+                                          authController.signUp();
+                                        }
+                                      },
+                                child: authController.isLoading.value
+                                    ? const SizedBox(
+                                        width: 24,
+                                        height: 24,
+                                        child: CircularProgressIndicator(
+                                            strokeWidth: 2),
+                                      )
+                                    : const Text(
+                                        'Sign Up',
+                                        style: TextStyle(
+                                          fontSize: 18,
+                                          color: Colors.white,
+                                        ),
+                                      ),
                               ),
                             ),
                           )
