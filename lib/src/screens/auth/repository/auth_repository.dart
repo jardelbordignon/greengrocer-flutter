@@ -5,6 +5,15 @@ import 'package:greengrocer/src/screens/auth/response/auth_response.dart';
 import 'package:greengrocer/src/services/http_manager.dart';
 
 class AuthRepository {
+  Future<AuthResponse> signUp(UserModel user) async {
+    final response = await httpManager.request(
+      url: Endpoints.signUp,
+      method: HttpMethods.post,
+      body: user.toJson(),
+    );
+    return _handleHttpResponse(response);
+  }
+
   Future<AuthResponse> signIn(String email, String password) async {
     final response = await httpManager.request(
       url: Endpoints.signIn,
@@ -25,8 +34,7 @@ class AuthRepository {
     return _handleHttpResponse(response);
   }
 
-  Future<AuthResponse> _handleHttpResponse(
-      Map<dynamic, dynamic> response) async {
+  AuthResponse _handleHttpResponse(Map<dynamic, dynamic> response) {
     if (response['result'] != null) {
       final user = UserModel.fromJson(response['result']);
       return AuthResponse.success(user);

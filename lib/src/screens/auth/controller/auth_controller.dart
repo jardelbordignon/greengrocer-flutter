@@ -27,11 +27,28 @@ class AuthController extends GetxController {
     Get.offAllNamed(Routes.base);
   }
 
+  Future<void> signUp() async {
+    isLoading.value = true;
+    AuthResponse response = await authRepository.signUp(user);
+    isLoading.value = false;
+
+    response.when(
+      success: (user) {
+        this.user = user;
+        saveTokenAndProceedToBase();
+      },
+      error: (message) {
+        utilsServices.showToast(
+          message: message,
+          type: ToastType.error,
+        );
+      },
+    );
+  }
+
   Future<void> signIn(String email, String password) async {
     isLoading.value = true;
-
     AuthResponse response = await authRepository.signIn(email, password);
-
     isLoading.value = false;
 
     response.when(
