@@ -17,6 +17,7 @@ class AuthController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    //await localStorage.deleteAll();
     validateToken();
   }
 

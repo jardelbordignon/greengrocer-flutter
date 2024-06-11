@@ -78,6 +78,7 @@ class SignInScreen extends StatelessWidget {
                         label: 'Email',
                         controller: emailController,
                         validator: Zod().min(6).email().build,
+                        textInputType: TextInputType.emailAddress,
                       ),
                       // Password
                       AppTextField(
