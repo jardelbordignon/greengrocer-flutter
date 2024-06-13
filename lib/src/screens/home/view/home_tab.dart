@@ -1,11 +1,9 @@
 import 'package:add_to_cart_animation/add_to_cart_animation.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:greengrocer/src/config/custom_colors.dart';
 import 'package:greengrocer/src/config/mocked_data.dart' as mocked_data;
 import 'package:greengrocer/src/screens/home/view/components/category_tile.dart';
 import 'package:greengrocer/src/screens/home/view/components/item_tile.dart';
-import 'package:greengrocer/src/screens/home/controller/home_controller.dart';
 import 'package:greengrocer/src/screens/shared_widgets/app_name_widget.dart';
 import 'package:greengrocer/src/screens/shared_widgets/app_shimmer.dart';
 import 'package:greengrocer/src/services/utils_services.dart';
@@ -36,8 +34,6 @@ class _HomeTabState extends State<HomeTab> {
   @override
   void initState() {
     super.initState();
-
-    Get.find<HomeController>().printExample();
 
     Future.delayed(const Duration(seconds: 3), () {
       setState(() {
