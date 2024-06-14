@@ -8,13 +8,18 @@ class HomeController extends GetxController {
   final homeRepository = HomeRepository();
 
   bool isLoading = false;
+  List<CategoryModel> categories = [];
+  CategoryModel? selectedCategory;
 
-  setIsLoading(bool value) {
+  void setIsLoading(bool value) {
     isLoading = value;
     update();
   }
 
-  List<CategoryModel> categories = [];
+  void selectCategory(CategoryModel? category) {
+    selectedCategory = category;
+    update();
+  }
 
   Future<void> getCategories() async {
     setIsLoading(true);
@@ -26,7 +31,10 @@ class HomeController extends GetxController {
     response.when(
       success: (data) {
         categories.assignAll(data);
-        print('HomeController.getCategories: $categories');
+        //print('HomeController.getCategories: $categories');
+        if (categories.isNotEmpty) {
+          selectCategory(categories.first);
+        }
       },
       error: (message) {
         utilsServices.showToast(

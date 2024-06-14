@@ -1,7 +1,9 @@
 import 'package:add_to_cart_animation/add_to_cart_animation.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:greengrocer/src/config/custom_colors.dart';
 import 'package:greengrocer/src/config/mocked_data.dart' as mocked_data;
+import 'package:greengrocer/src/screens/home/controller/home_controller.dart';
 import 'package:greengrocer/src/screens/home/view/components/category_tile.dart';
 import 'package:greengrocer/src/screens/home/view/components/item_tile.dart';
 import 'package:greengrocer/src/screens/shared_widgets/app_name_widget.dart';
@@ -16,8 +18,6 @@ class HomeTab extends StatefulWidget {
 }
 
 class _HomeTabState extends State<HomeTab> {
-  String selectedCategory = mocked_data.categories[0];
-
   // We can detect the location of the cart by this  GlobalKey<CartIconKey>
   GlobalKey<CartIconKey> cartKey = GlobalKey<CartIconKey>();
   late Function(GlobalKey) runAddToCartAnimation;
@@ -29,17 +29,9 @@ class _HomeTabState extends State<HomeTab> {
         .runCartAnimation((++_cartQuantityItems).toString());
   }
 
-  bool isLoading = true;
-
   @override
   void initState() {
     super.initState();
-
-    Future.delayed(const Duration(seconds: 3), () {
-      setState(() {
-        isLoading = false;
-      });
-    });
   }
 
   @override
@@ -132,81 +124,69 @@ class _HomeTabState extends State<HomeTab> {
             ),
 
             // Categories selector
-            Container(
-              padding: const EdgeInsets.only(left: 25),
-              height: 40,
-              child: isLoading
-                  ? ListView(
-                      scrollDirection: Axis.horizontal,
-                      children: List.generate(
-                        10,
-                        (index) => Container(
-                          alignment: Alignment.center,
-                          margin: const EdgeInsets.only(right: 12),
-                          child: AppShimmer(
-                            height: 20,
-                            width: 80,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                        ),
-                      ),
-                    )
-                  : ListView.separated(
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (BuildContext ctx, int index) =>
-                          CategoryTile(
+            GetBuilder<HomeController>(
+              builder: (controller) {
+                return Container(
+                  padding: const EdgeInsets.only(left: 25),
+                  height: 40,
+                  child: ListView.separated(
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (_, index) {
+                      return CategoryTile(
+                        category: controller.categories[index],
+                        isSelected: controller.categories[index] ==
+                            controller.selectedCategory,
                         onTap: () {
-                          setState(() {
-                            selectedCategory = mocked_data.categories[index];
-                          });
+                          controller
+                              .selectCategory(controller.categories[index]);
                         },
-                        category:
-                            mocked_data.categories[index], // Named parameter
-                        isSelected: mocked_data.categories[index] ==
-                            selectedCategory, // Named parameter
-                      ),
-                      separatorBuilder: (BuildContext ctx, int index) =>
-                          const SizedBox(width: 10),
-                      itemCount: mocked_data.categories.length,
-                    ),
+                      );
+                    },
+                    separatorBuilder: (_, index) => const SizedBox(width: 10),
+                    itemCount: controller.categories.length,
+                  ),
+                );
+              },
             ),
 
             // Store grid
-            Expanded(
-              child: isLoading
-                  ? GridView.count(
-                      padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-                      physics: const BouncingScrollPhysics(),
-                      crossAxisCount: 2,
-                      mainAxisSpacing: 10,
-                      crossAxisSpacing: 10,
-                      childAspectRatio: 9 / 11.5,
-                      children: List.generate(
-                        10,
-                        (index) => AppShimmer(
-                          height: double.infinity,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                      ))
-                  : GridView.builder(
-                      padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-                      physics: const BouncingScrollPhysics(),
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
+            GetBuilder<HomeController>(builder: (controller) {
+              return Expanded(
+                child: controller.isLoading
+                    ? GridView.count(
+                        padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+                        physics: const BouncingScrollPhysics(),
                         crossAxisCount: 2,
                         mainAxisSpacing: 10,
                         crossAxisSpacing: 10,
                         childAspectRatio: 9 / 11.5,
+                        children: List.generate(
+                          10,
+                          (index) => AppShimmer(
+                            height: double.infinity,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ))
+                    : GridView.builder(
+                        padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+                        physics: const BouncingScrollPhysics(),
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          mainAxisSpacing: 10,
+                          crossAxisSpacing: 10,
+                          childAspectRatio: 9 / 11.5,
+                        ),
+                        itemCount: mocked_data.items.length,
+                        itemBuilder: (BuildContext ctx, int index) {
+                          return ItemTile(
+                            cartAnimationMethod: itemSelectedCartAnimation,
+                            item: mocked_data.items[index],
+                          );
+                        },
                       ),
-                      itemCount: mocked_data.items.length,
-                      itemBuilder: (BuildContext ctx, int index) {
-                        return ItemTile(
-                          cartAnimationMethod: itemSelectedCartAnimation,
-                          item: mocked_data.items[index],
-                        );
-                      },
-                    ),
-            ),
+              );
+            }),
           ],
         ),
       ),

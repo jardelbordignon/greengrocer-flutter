@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:greengrocer/src/config/custom_colors.dart';
+import 'package:greengrocer/src/models/category_model.dart';
 
 class CategoryTile extends StatelessWidget {
   const CategoryTile({
@@ -9,7 +10,7 @@ class CategoryTile extends StatelessWidget {
     required this.onTap,
   });
 
-  final String category;
+  final CategoryModel category;
   final bool isSelected;
   final VoidCallback onTap;
 
@@ -29,7 +30,7 @@ class CategoryTile extends StatelessWidget {
                 : Colors.transparent,
           ),
           child: Text(
-            category,
+            category.title,
             style: TextStyle(
               color:
                   isSelected ? Colors.white : CustomColors.customContrastColor,
