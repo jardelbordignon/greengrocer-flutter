@@ -4,6 +4,7 @@ import 'package:greengrocer/src/models/order_model.dart';
 import 'package:greengrocer/src/models/user_model.dart';
 
 ItemModel apple = ItemModel(
+  id: '1',
   description:
       'A melhor maçã da região e que conta com o melhor preço de qualquer quitanda. Este item conta com vitaminas essenciais para o fortalecimento corporal, resultando em uma vida saudável.',
   imageUrl: 'assets/fruits/apple.png',
@@ -13,6 +14,7 @@ ItemModel apple = ItemModel(
 );
 
 ItemModel grape = ItemModel(
+  id: '2',
   imageUrl: 'assets/fruits/grape.png',
   name: 'Uva',
   price: 7.4,
@@ -22,6 +24,7 @@ ItemModel grape = ItemModel(
 );
 
 ItemModel guava = ItemModel(
+  id: '3',
   imageUrl: 'assets/fruits/guava.png',
   name: 'Goiaba',
   price: 11.5,
@@ -31,6 +34,7 @@ ItemModel guava = ItemModel(
 );
 
 ItemModel kiwi = ItemModel(
+  id: '4',
   imageUrl: 'assets/fruits/kiwi.png',
   name: 'Kiwi',
   price: 2.5,
@@ -40,6 +44,7 @@ ItemModel kiwi = ItemModel(
 );
 
 ItemModel mango = ItemModel(
+  id: '5',
   imageUrl: 'assets/fruits/mango.png',
   name: 'Manga',
   price: 2.5,
@@ -49,6 +54,7 @@ ItemModel mango = ItemModel(
 );
 
 ItemModel papaya = ItemModel(
+  id: '6',
   imageUrl: 'assets/fruits/papaya.png',
   name: 'Mamão papaya',
   price: 8,
