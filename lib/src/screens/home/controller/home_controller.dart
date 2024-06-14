@@ -21,6 +21,19 @@ class HomeController extends GetxController {
         categoryProducts.length;
   }
 
+  RxString searchWord = ''.obs;
+
+  @override
+  void onInit() {
+    super.onInit();
+
+    debounce(searchWord, (_) {
+      print(searchWord);
+    }, time: const Duration(milliseconds: 600));
+
+    getCategories();
+  }
+
   void setIsLoading(bool value, {bool isProducts = false}) {
     isProducts ? isLoadingProducts = value : isLoadingCategories = value;
     update();
@@ -84,11 +97,5 @@ class HomeController extends GetxController {
   void getNextProducts() {
     selectedCategory!.currentPage++;
     getProducts(showLoader: false);
-  }
-
-  @override
-  void onInit() {
-    super.onInit();
-    getCategories();
   }
 }

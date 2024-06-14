@@ -28,10 +28,7 @@ class _HomeTabState extends State<HomeTab> {
         .runCartAnimation((++_cartQuantityItems).toString());
   }
 
-  @override
-  void initState() {
-    super.initState();
-  }
+  final homeController = Get.find<HomeController>();
 
   @override
   Widget build(BuildContext context) {
@@ -97,6 +94,9 @@ class _HomeTabState extends State<HomeTab> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               child: TextFormField(
+                onChanged: (value) {
+                  homeController.searchWord.value = value;
+                },
                 decoration: InputDecoration(
                   filled: true,
                   fillColor: Colors.white,
