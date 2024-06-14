@@ -2,7 +2,6 @@ import 'package:add_to_cart_animation/add_to_cart_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:greengrocer/src/config/custom_colors.dart';
-import 'package:greengrocer/src/config/mocked_data.dart' as mocked_data;
 import 'package:greengrocer/src/screens/home/controller/home_controller.dart';
 import 'package:greengrocer/src/screens/home/view/components/category_tile.dart';
 import 'package:greengrocer/src/screens/home/view/components/item_tile.dart';
@@ -152,7 +151,7 @@ class _HomeTabState extends State<HomeTab> {
             // Store grid
             GetBuilder<HomeController>(builder: (controller) {
               return Expanded(
-                child: controller.isLoading
+                child: controller.isLoadingProducts
                     ? GridView.count(
                         padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
                         physics: const BouncingScrollPhysics(),
@@ -177,11 +176,11 @@ class _HomeTabState extends State<HomeTab> {
                           crossAxisSpacing: 10,
                           childAspectRatio: 9 / 11.5,
                         ),
-                        itemCount: mocked_data.items.length,
+                        itemCount: controller.categoryProducts.length,
                         itemBuilder: (BuildContext ctx, int index) {
                           return ItemTile(
                             cartAnimationMethod: itemSelectedCartAnimation,
-                            item: mocked_data.items[index],
+                            item: controller.categoryProducts[index],
                           );
                         },
                       ),
