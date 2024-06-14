@@ -21,14 +21,14 @@ class HomeController extends GetxController {
         categoryProducts.length;
   }
 
-  RxString searchWord = ''.obs;
+  RxString searchTitle = ''.obs;
 
   @override
   void onInit() {
     super.onInit();
 
-    debounce(searchWord, (_) {
-      print(searchWord);
+    debounce(searchTitle, (_) {
+      print(searchTitle);
       update();
     }, time: const Duration(milliseconds: 600));
 
@@ -98,5 +98,36 @@ class HomeController extends GetxController {
   void getNextProducts() {
     selectedCategory!.currentPage++;
     getProducts(showLoader: false);
+  }
+
+  void filterByTitle() {
+    for (var category in categories) {
+      category.items.clear();
+      category.currentPage = 0;
+    }
+
+    if (searchTitle.value.isEmpty) {
+      categories.removeAt(0);
+    } else {
+      CategoryModel? c = categories.firstWhereOrNull((c) => c.id == '');
+
+      if (c == null) {
+        final allCategory = CategoryModel(
+          id: '',
+          title: 'Todos',
+          items: [],
+          currentPage: 0,
+        );
+
+        categories.insert(0, allCategory);
+      } else {
+        c.items.clear();
+        c.currentPage = 0;
+      }
+    }
+
+    selectedCategory = categories.first;
+    update();
+    getProducts();
   }
 }

@@ -98,7 +98,7 @@ class _HomeTabState extends State<HomeTab> {
                   child: TextFormField(
                     controller: searchController,
                     onChanged: (value) {
-                      controller.searchWord.value = value;
+                      controller.searchTitle.value = value;
                     },
                     decoration: InputDecoration(
                       filled: true,
@@ -121,11 +121,11 @@ class _HomeTabState extends State<HomeTab> {
                         color: CustomColors.customContrastColor,
                         size: 24,
                       ),
-                      suffixIcon: controller.searchWord.value.isNotEmpty
+                      suffixIcon: controller.searchTitle.value.isNotEmpty
                           ? IconButton(
                               onPressed: () {
                                 searchController.clear();
-                                controller.searchWord.value = '';
+                                controller.searchTitle.value = '';
                                 FocusScope.of(context).unfocus();
                               },
                               icon: Icon(
