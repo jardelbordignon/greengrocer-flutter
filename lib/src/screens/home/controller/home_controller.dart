@@ -15,6 +15,11 @@ class HomeController extends GetxController {
   List<CategoryModel> categories = [];
   CategoryModel? selectedCategory;
   List<ItemModel> get categoryProducts => selectedCategory?.items ?? [];
+  bool get isLastPage {
+    if (categoryProducts.length < itemsPerPage) return true;
+    return selectedCategory!.currentPage * itemsPerPage >
+        categoryProducts.length;
+  }
 
   void setIsLoading(bool value, {bool isProducts = false}) {
     isProducts ? isLoadingProducts = value : isLoadingCategories = value;
@@ -51,20 +56,21 @@ class HomeController extends GetxController {
     );
   }
 
-  Future<void> getProducts() async {
+  Future<void> getProducts({bool showLoader = true}) async {
     Map<String, dynamic> body = {
       'categoryId': selectedCategory!.id,
       'itemsPerPage': itemsPerPage,
       'page': selectedCategory!.currentPage,
     };
 
-    setIsLoading(true, isProducts: true);
+    if (showLoader) setIsLoading(true, isProducts: true);
     HomeResponse<ItemModel> response = await homeRepository.getProducts(body);
     setIsLoading(false, isProducts: true);
 
     response.when(
       success: (data) {
-        selectedCategory!.items = data;
+        //print('loaded products: $data');
+        selectedCategory!.items.addAll(data);
       },
       error: (message) {
         utilsServices.showToast(
@@ -73,6 +79,11 @@ class HomeController extends GetxController {
         );
       },
     );
+  }
+
+  void getNextProducts() {
+    selectedCategory!.currentPage++;
+    getProducts(showLoader: false);
   }
 
   @override

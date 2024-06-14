@@ -178,6 +178,11 @@ class _HomeTabState extends State<HomeTab> {
                         ),
                         itemCount: controller.categoryProducts.length,
                         itemBuilder: (BuildContext ctx, int index) {
+                          bool loadMoreProducts = !controller.isLastPage &&
+                              index == controller.categoryProducts.length - 1;
+
+                          if (loadMoreProducts) controller.getNextProducts();
+
                           return ItemTile(
                             cartAnimationMethod: itemSelectedCartAnimation,
                             item: controller.categoryProducts[index],
