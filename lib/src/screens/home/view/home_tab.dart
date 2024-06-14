@@ -185,28 +185,42 @@ class _HomeTabState extends State<HomeTab> {
                             borderRadius: BorderRadius.circular(10),
                           ),
                         ))
-                    : GridView.builder(
-                        padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-                        physics: const BouncingScrollPhysics(),
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          mainAxisSpacing: 10,
-                          crossAxisSpacing: 10,
-                          childAspectRatio: 9 / 11.5,
+                    : Visibility(
+                        visible: controller.categoryProducts.isNotEmpty,
+                        replacement: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.search_off,
+                              size: 40,
+                              color: CustomColors.customSwatchColor,
+                            ),
+                            const Text('No results found!'),
+                          ],
                         ),
-                        itemCount: controller.categoryProducts.length,
-                        itemBuilder: (BuildContext ctx, int index) {
-                          bool loadMoreProducts = !controller.isLastPage &&
-                              index == controller.categoryProducts.length - 1;
+                        child: GridView.builder(
+                          padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+                          physics: const BouncingScrollPhysics(),
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            mainAxisSpacing: 10,
+                            crossAxisSpacing: 10,
+                            childAspectRatio: 9 / 11.5,
+                          ),
+                          itemCount: controller.categoryProducts.length,
+                          itemBuilder: (BuildContext ctx, int index) {
+                            bool loadMoreProducts = !controller.isLastPage &&
+                                index == controller.categoryProducts.length - 1;
 
-                          if (loadMoreProducts) controller.getNextProducts();
+                            if (loadMoreProducts) controller.getNextProducts();
 
-                          return ItemTile(
-                            cartAnimationMethod: itemSelectedCartAnimation,
-                            item: controller.categoryProducts[index],
-                          );
-                        },
+                            return ItemTile(
+                              cartAnimationMethod: itemSelectedCartAnimation,
+                              item: controller.categoryProducts[index],
+                            );
+                          },
+                        ),
                       ),
               );
             }),

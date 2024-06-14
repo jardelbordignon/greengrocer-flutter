@@ -27,10 +27,11 @@ class HomeController extends GetxController {
   void onInit() {
     super.onInit();
 
-    debounce(searchTitle, (_) {
-      print(searchTitle);
-      update();
-    }, time: const Duration(milliseconds: 600));
+    debounce(
+      searchTitle,
+      (_) => filterByTitle(),
+      time: const Duration(milliseconds: 600),
+    );
 
     getCategories();
   }
@@ -77,6 +78,11 @@ class HomeController extends GetxController {
       'page': selectedCategory!.currentPage,
     };
 
+    if (searchTitle.value.isNotEmpty) {
+      body['title'] = searchTitle.value;
+      if (selectedCategory!.id == 'all') body.remove('categoryId');
+    }
+
     if (showLoader) setIsLoading(true, isProducts: true);
     HomeResponse<ItemModel> response = await homeRepository.getProducts(body);
     setIsLoading(false, isProducts: true);
@@ -109,11 +115,11 @@ class HomeController extends GetxController {
     if (searchTitle.value.isEmpty) {
       categories.removeAt(0);
     } else {
-      CategoryModel? c = categories.firstWhereOrNull((c) => c.id == '');
+      CategoryModel? c = categories.firstWhereOrNull((c) => c.id == 'all');
 
       if (c == null) {
         final allCategory = CategoryModel(
-          id: '',
+          id: 'all',
           title: 'Todos',
           items: [],
           currentPage: 0,
