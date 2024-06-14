@@ -5,6 +5,8 @@ import 'package:greengrocer/src/screens/home/repository/home_repository.dart';
 import 'package:greengrocer/src/screens/home/response/home_response.dart';
 import 'package:greengrocer/src/services/utils_services.dart';
 
+const int itemsPerPage = 6;
+
 class HomeController extends GetxController {
   final homeRepository = HomeRepository();
 
@@ -20,6 +22,7 @@ class HomeController extends GetxController {
   void selectCategory(CategoryModel? category) {
     selectedCategory = category;
     update();
+    getProducts();
   }
 
   Future<void> getCategories() async {
@@ -43,12 +46,15 @@ class HomeController extends GetxController {
   }
 
   Future<void> getProducts() async {
-    HomeResponse<ItemModel> response = await homeRepository.getProducts({
-      'categoryId': selectedCategory?.id,
-      'title': null,
-      'page': 0,
-      'itemsPerPage': 6
-    });
+    Map<String, dynamic> body = {
+      'categoryId': selectedCategory!.id,
+      'itemsPerPage': itemsPerPage,
+      'page': selectedCategory!.currentPage,
+    };
+
+    setIsLoading(true);
+    HomeResponse<ItemModel> response = await homeRepository.getProducts(body);
+    setIsLoading(false);
 
     response.when(
       success: (data) {
@@ -64,10 +70,8 @@ class HomeController extends GetxController {
   }
 
   @override
-  void onInit() async {
+  void onInit() {
     super.onInit();
-    await getCategories();
-    await getProducts();
-    setIsLoading(false);
+    getCategories();
   }
 }
