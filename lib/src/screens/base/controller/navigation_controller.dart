@@ -13,17 +13,20 @@ class NavigationController extends GetxController {
   late PageController _pageController;
   late RxInt _currentIndex;
 
+  PageController get pageController => _pageController;
+  int get currentIndex => _currentIndex.value;
+
   @override
   void onInit() {
     super.onInit();
 
-    initNavigation(
+    _initNavigation(
       pageController: PageController(initialPage: NavigationTabs.home),
       currentIndex: NavigationTabs.home,
     );
   }
 
-  void initNavigation({
+  void _initNavigation({
     required PageController pageController,
     required int currentIndex,
   }) {
@@ -35,10 +38,11 @@ class NavigationController extends GetxController {
     if (_currentIndex.value == index) return;
 
     _currentIndex.value = index;
-    _pageController.animateToPage(
-      index,
-      duration: const Duration(milliseconds: 500),
-      curve: Curves.easeIn,
-    );
+    _pageController.jumpToPage(index);
+    // _pageController.animateToPage(
+    //   index,
+    //   duration: const Duration(milliseconds: 500),
+    //   curve: Curves.easeIn,
+    // );
   }
 }
