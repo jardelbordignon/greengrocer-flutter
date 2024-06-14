@@ -21,14 +21,13 @@ class _HomeTabState extends State<HomeTab> {
   GlobalKey<CartIconKey> cartKey = GlobalKey<CartIconKey>();
   late Function(GlobalKey) runAddToCartAnimation;
   var _cartQuantityItems = 0;
+  final searchController = TextEditingController();
 
   void itemSelectedCartAnimation(GlobalKey globalKey) async {
     await runAddToCartAnimation(globalKey);
     await cartKey.currentState!
         .runCartAnimation((++_cartQuantityItems).toString());
   }
-
-  final homeController = Get.find<HomeController>();
 
   @override
   Widget build(BuildContext context) {
@@ -91,35 +90,55 @@ class _HomeTabState extends State<HomeTab> {
         child: Column(
           children: [
             // Search bar
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-              child: TextFormField(
-                onChanged: (value) {
-                  homeController.searchWord.value = value;
-                },
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: Colors.white,
-                  isDense: true,
-                  hintText: 'Search products...',
-                  hintStyle: TextStyle(
-                    color: Colors.grey.shade400,
-                    fontSize: 14,
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(60),
-                    borderSide: const BorderSide(
-                      width: 0,
-                      style: BorderStyle.none,
+            GetBuilder<HomeController>(
+              builder: (controller) {
+                return Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  child: TextFormField(
+                    controller: searchController,
+                    onChanged: (value) {
+                      controller.searchWord.value = value;
+                    },
+                    decoration: InputDecoration(
+                      filled: true,
+                      fillColor: Colors.white,
+                      isDense: true,
+                      hintText: 'Search products...',
+                      hintStyle: TextStyle(
+                        color: Colors.grey.shade400,
+                        fontSize: 14,
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(60),
+                        borderSide: const BorderSide(
+                          width: 0,
+                          style: BorderStyle.none,
+                        ),
+                      ),
+                      prefixIcon: Icon(
+                        Icons.search,
+                        color: CustomColors.customContrastColor,
+                        size: 24,
+                      ),
+                      suffixIcon: controller.searchWord.value.isNotEmpty
+                          ? IconButton(
+                              onPressed: () {
+                                searchController.clear();
+                                controller.searchWord.value = '';
+                                FocusScope.of(context).unfocus();
+                              },
+                              icon: Icon(
+                                Icons.close,
+                                color: CustomColors.customContrastColor,
+                                size: 24,
+                              ),
+                            )
+                          : null,
                     ),
                   ),
-                  prefixIcon: Icon(
-                    Icons.search,
-                    color: CustomColors.customContrastColor,
-                    size: 24,
-                  ),
-                ),
-              ),
+                );
+              },
             ),
 
             // Categories selector

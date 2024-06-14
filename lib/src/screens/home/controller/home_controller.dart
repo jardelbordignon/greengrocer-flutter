@@ -29,6 +29,7 @@ class HomeController extends GetxController {
 
     debounce(searchWord, (_) {
       print(searchWord);
+      update();
     }, time: const Duration(milliseconds: 600));
 
     getCategories();
