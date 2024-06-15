@@ -69,10 +69,10 @@ List<ItemModel> items = [apple, grape, guava, kiwi, mango, papaya];
 List<String> categories = ['Carnes', 'Cereais', 'Frutas', 'Grãos', 'Verduras'];
 
 List<CartItemModel> cartItems = [
-  CartItemModel(item: apple, quantity: 1),
-  CartItemModel(item: guava, quantity: 2),
-  CartItemModel(item: mango, quantity: 3),
-  CartItemModel(item: kiwi, quantity: 4),
+  CartItemModel(id: '1', item: apple, quantity: 1),
+  CartItemModel(id: '2', item: guava, quantity: 2),
+  CartItemModel(id: '3', item: mango, quantity: 3),
+  CartItemModel(id: '4', item: kiwi, quantity: 4),
 ];
 
 UserModel user = UserModel(
@@ -108,6 +108,7 @@ List<OrderModel> orders = [
     total: 11,
     items: [
       CartItemModel(
+        id: '5',
         item: apple,
         quantity: 2,
       )
