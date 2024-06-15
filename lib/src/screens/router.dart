@@ -3,6 +3,7 @@ import 'package:greengrocer/src/screens/auth/view/sign_in_screen.dart';
 import 'package:greengrocer/src/screens/auth/view/sign_up_screen.dart';
 import 'package:greengrocer/src/screens/base/base_screen.dart';
 import 'package:greengrocer/src/screens/base/binding/navigation_binding.dart';
+import 'package:greengrocer/src/screens/cart/binding/cart_binding.dart';
 import 'package:greengrocer/src/screens/home/binding/home_binding.dart';
 import 'package:greengrocer/src/screens/splash/splash_screen.dart';
 
@@ -15,8 +16,10 @@ abstract class Pages {
       name: Routes.base,
       page: () => const BaseScreen(),
       bindings: [
+        // Bindings will injected into respective controllers when BaseScreen is loaded
         NavigationBinding(),
-        HomeBinding(), // HomeBinding will inject HomeController when BaseScreen is loaded
+        HomeBinding(),
+        CartBinding(),
       ],
     ),
   ];
