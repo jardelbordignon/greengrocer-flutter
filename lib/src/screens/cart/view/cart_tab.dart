@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:greengrocer/src/config/custom_colors.dart';
 import 'package:greengrocer/src/config/mocked_data.dart' as mocked_data;
 import 'package:greengrocer/src/models/cart_item_model.dart';
-import 'package:greengrocer/src/screens/cart/components/cart_tile.dart';
+import 'package:greengrocer/src/screens/cart/view/components/cart_tile.dart';
 import 'package:greengrocer/src/screens/shared_widgets/payment_dialog.dart';
 import 'package:greengrocer/src/services/utils_services.dart';
 
