@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:greengrocer/src/config/custom_colors.dart';
-import 'package:greengrocer/src/config/mocked_data.dart' as mocked_data;
 import 'package:greengrocer/src/models/cart_item_model.dart';
+import 'package:greengrocer/src/screens/cart/controller/cart_controller.dart';
 import 'package:greengrocer/src/screens/cart/view/components/cart_tile.dart';
 import 'package:greengrocer/src/screens/shared_widgets/payment_dialog.dart';
 import 'package:greengrocer/src/services/utils_services.dart';
@@ -15,21 +16,9 @@ class CartTab extends StatefulWidget {
 
 class _CartTabState extends State<CartTab> {
   void removeItemFromCart(CartItemModel cartItem) {
-    setState(() {
-      mocked_data.cartItems.remove(cartItem);
-
-      utilsServices.showToast(
-        message: '${cartItem.item.name} removed from cart',
-      );
-    });
-  }
-
-  double cartTotalPrice() {
-    double total = 0;
-    for (var item in mocked_data.cartItems) {
-      total += item.totalPrice();
-    }
-    return total;
+    utilsServices.showToast(
+      message: '${cartItem.item.name} removed from cart',
+    );
   }
 
   @override
@@ -40,12 +29,15 @@ class _CartTabState extends State<CartTab> {
         children: [
           // List of items
           Expanded(
-            child: ListView.builder(
-              itemCount: mocked_data.cartItems.length,
-              itemBuilder: (_, index) {
-                return CartTile(
-                  cartItem: mocked_data.cartItems[index],
-                  remove: removeItemFromCart,
+            child: GetBuilder<CartController>(
+              builder: (cartController) {
+                return ListView.builder(
+                  itemCount: cartController.cartItems.length,
+                  itemBuilder: (_, index) {
+                    return CartTile(
+                      cartItem: cartController.cartItems[index],
+                    );
+                  },
                 );
               },
             ),
@@ -71,13 +63,19 @@ class _CartTabState extends State<CartTab> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 const Text('Total', style: TextStyle(fontSize: 12)),
-                Text(
-                  utilsServices.priceToCurrency(cartTotalPrice()),
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: CustomColors.customSwatchColor,
-                  ),
+                GetBuilder<CartController>(
+                  builder: (cartController) {
+                    return Text(
+                      utilsServices.priceToCurrency(
+                        cartController.cartTotalPrice(),
+                      ),
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: CustomColors.customSwatchColor,
+                      ),
+                    );
+                  },
                 ),
                 SizedBox(
                   height: 50,
@@ -85,11 +83,11 @@ class _CartTabState extends State<CartTab> {
                     onPressed: () async {
                       bool? orderConfirmed = await showOrderConfirmation();
                       if (orderConfirmed ?? false) {
-                        showDialog(
-                          context: context,
-                          builder: (context) =>
-                              PaymentDialog(order: mocked_data.orders.first),
-                        );
+                        // showDialog(
+                        //   context: context,
+                        //   builder: (context) =>
+                        //       PaymentDialog(order: mocked_data.orders.first),
+                        // );
                       } else {
                         utilsServices.showToast(
                           message: 'You canceled the order',
