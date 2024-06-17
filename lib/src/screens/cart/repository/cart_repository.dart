@@ -47,4 +47,22 @@ class CartRepository {
       return CartResponse.error(response['error'] ?? 'Error on add item to cart');
     }
   }
+
+  Future<bool> changeItemQuantity({
+    required String token,
+    required String cartItemId,
+    required int quantity,
+  }) async {
+    final response = await httpManager.request(
+      url: Endpoints.changeItemQuantity,
+      method: HttpMethods.post,
+      headers: {'X-Parse-Session-Token': token},
+      body: {
+        'cartItemId': cartItemId,
+        'quantity': quantity,
+      },
+    );
+
+    return response.isEmpty;
+  }
 }
