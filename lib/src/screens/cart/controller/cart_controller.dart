@@ -52,21 +52,10 @@ class CartController extends GetxController {
     final isAlreadyInCart = cartItemIndex >= 0;
 
     if (isAlreadyInCart) {
-      final newQuantity = cartItems[cartItemIndex].quantity + quantity;
-
-      final success = await changeItemQuantity(
+      await changeItemQuantity(
         cartItemId: cartItems[cartItemIndex].id,
-        quantity: newQuantity,
+        quantity: cartItems[cartItemIndex].quantity + quantity,
       );
-
-      if (success) {
-        cartItems[cartItemIndex].quantity = newQuantity;
-      } else {
-        utilsServices.showToast(
-          message: 'Error on update quantity of item',
-          type: ToastType.error,
-        );
-      }
     } else {
       final CartResponse<String> response = await cartRepository.addItemToCart(
         userId: authController.user.id!,
@@ -98,10 +87,29 @@ class CartController extends GetxController {
     required String cartItemId,
     required int quantity,
   }) async {
-    return cartRepository.changeItemQuantity(
+    final itWasSuccessful = await cartRepository.changeItemQuantity(
       token: authController.user.token!,
       cartItemId: cartItemId,
       quantity: quantity,
     );
+
+    if (itWasSuccessful) {
+      bool isSameCartItem(CartItemModel cartItem) => cartItem.id == cartItemId;
+
+      if (quantity == 0) {
+        cartItems.removeWhere(isSameCartItem);
+      } else {
+        cartItems.firstWhere(isSameCartItem).quantity = quantity;
+      }
+
+      update();
+    } else {
+      utilsServices.showToast(
+        message: 'Error on update quantity of item',
+        type: ToastType.error,
+      );
+    }
+
+    return itWasSuccessful;
   }
 }
