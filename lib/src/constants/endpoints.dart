@@ -6,4 +6,5 @@ abstract class Endpoints {
   static const String getCategories = '/get-category-list';
   static const String getProducts = '/get-product-list';
   static const String getCartItems = '/get-cart-items';
+  static const String addItemToCart = '/add-item-to-cart';
 }
