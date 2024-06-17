@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:greengrocer/src/config/custom_colors.dart';
 import 'package:greengrocer/src/models/item_model.dart';
-import 'package:greengrocer/src/screens/product/product_screen.dart';
+import 'package:greengrocer/src/screens/router.dart';
 import 'package:greengrocer/src/services/utils_services.dart';
 
 class ItemTile extends StatefulWidget {
@@ -36,10 +37,11 @@ class _ItemTileState extends State<ItemTile> {
         // Item content
         GestureDetector(
           onTap: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                  builder: (builder) => ProductScreen(item: widget.item)),
-            );
+            // Navigator.of(context).push(
+            //   MaterialPageRoute(
+            //       builder: (builder) => ProductScreen(item: widget.item)),
+            // );
+            Get.toNamed(Routes.product, arguments: widget.item);
           },
           child: Card(
             elevation: 3,

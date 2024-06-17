@@ -7,12 +7,12 @@ import 'package:greengrocer/src/screens/shared_widgets/quantity_widget.dart';
 import 'package:greengrocer/src/services/utils_services.dart';
 
 class ProductScreen extends StatefulWidget {
-  final ItemModel item;
-
-  const ProductScreen({
+  ProductScreen({
     super.key,
-    required this.item,
   });
+
+  // in item_tile we pass an item by arguments: Get.toNamed(Routes.product, arguments: widget.item);
+  final ItemModel item = Get.arguments;
 
   @override
   State<ProductScreen> createState() => _ProductScreenState();
