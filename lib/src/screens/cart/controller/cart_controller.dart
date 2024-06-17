@@ -3,6 +3,7 @@ import 'package:greengrocer/src/models/cart_item_model.dart';
 import 'package:greengrocer/src/models/item_model.dart';
 import 'package:greengrocer/src/screens/auth/controller/auth_controller.dart';
 import 'package:greengrocer/src/screens/cart/repository/cart_repository.dart';
+import 'package:greengrocer/src/screens/cart/response/cart_response.dart';
 import 'package:greengrocer/src/services/utils_services.dart';
 
 class CartController extends GetxController {
@@ -51,12 +52,26 @@ class CartController extends GetxController {
     if (cartItemIndex >= 0) {
       cartItems[cartItemIndex].quantity += quantity;
     } else {
-      cartItems.add(
-        CartItemModel(
-          id: '',
-          item: item,
-          quantity: quantity,
-        ),
+      final CartResponse<String> response = await cartRepository.addItemToCart(
+        userId: authController.user.id!,
+        token: authController.user.token!,
+        productId: item.id,
+        quantity: quantity,
+      );
+
+      response.when(
+        success: (cartItemId) {
+          cartItems.add(
+            CartItemModel(
+              id: cartItemId,
+              item: item,
+              quantity: quantity,
+            ),
+          );
+        },
+        error: (message) {
+          utilsServices.showToast(message: message, type: ToastType.error);
+        },
       );
     }
   }
